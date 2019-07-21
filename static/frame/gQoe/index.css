@@ -1,0 +1,83 @@
+* {
+    margin:0px; padding: 0px;
+}
+
+body {
+    width: 465px;
+    height: 465px;
+    background-color: #ffe;
+    overflow: hidden;
+    background: -webkit-gradient(linear, 
+      left top,
+      left bottom,
+      from(#5bf),
+      color-stop(0.49999, #fff),
+      color-stop(0.50000, #eec),
+      to(#eec));
+    background: -moz-linear-gradient(
+      top,
+      #5bf,
+      #fff 49.999%,
+      #eec 50.000%,
+      #eec);
+}
+
+.polygon {
+  width: 0px;
+  height: 0px;
+  border-left: solid 40px #ccc;
+  border-top: solid 40px #ccc;
+  border-bottom: solid 40px transparent;
+  border-right: solid 40px transparent;
+  position: absolute;
+  -webkit-transform-origin: 0 0 0;
+}
+
+div {
+  -webkit-transform-style: preserve-3d;
+}
+
+#camera {
+  position: absolute;
+  left: 230px;
+  top: 180px;
+  -webkit-perspective: 500;
+  -webkit-perspective-origin: 0% 0%;
+}
+
+@-webkit-keyframes camerawork {
+    0% {
+        -webkit-transform: translate3d(0px, 10px, 0px) rotateX(90deg) rotateZ(0deg);
+    }
+    50% {
+        -webkit-transform: translate3d(0px, 10px, 0px) rotateX(90deg) rotateZ(180deg);
+    }
+    100% {
+        -webkit-transform: translate3d(0px, 10px, 0px) rotateX(90deg) rotateZ(360deg);
+    }
+} #view {
+  -webkit-animation: camerawork 10s linear 0s infinite;
+}
+
+@-webkit-keyframes swing {
+    0% {
+        -webkit-transform: translate3d(0px, 0px, 0px) rotateX(30deg);
+    }
+    100% {
+        -webkit-transform: translate3d(0px, 0px, 0px) rotateX(120deg);
+    }
+} #miku_arm {
+  -webkit-transform-origin: 0 0 0;
+  -webkit-animation: swing 0.5s linear 0s infinite alternate;
+}
+
+#shadow {
+  width: 0px;
+  height: 0px;
+  border-radius: 100px;
+  border: 50px solid #ccb;
+  -webkit-transform: translate3d(-50px, 70px, -109px);
+}
+
+
+

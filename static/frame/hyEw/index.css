@@ -1,0 +1,68 @@
+/* #! scss */
+#world {
+  -webkit-transform: translate(0px, 0px); }
+
+@-webkit-keyframes dance {
+  0% {
+    -webkit-transform: matrix(0, 0.5, 0.25, 0, 0, 0); }
+
+  5% {
+    -webkit-transform: matrix(0, 0.5, 0.25, 0.25, 0, 0); }
+
+  10% {
+    -webkit-transform: matrix(0, 0.25, 0.25, 0, 0, 50); }
+
+  15% {
+    -webkit-transform: matrix(0, 0.25, 0.25, 0.25, 0, 50); }
+
+  20% {
+    -webkit-transform: matrix(0, 0, 0.25, 0, 0, 100); }
+
+  25% {
+    -webkit-transform: matrix(0, 0, 0.25, 0.25, 0, 100); }
+
+  25% {
+    -webkit-transform: matrix(0, -0.25, 0.25, 0, 0, 150); }
+
+  30% {
+    -webkit-transform: matrix(0, -0.25, 0.25, 0.25, 0, 150); }
+
+  35% {
+    -webkit-transform: matrix(0.25, 0.5, 0, 0.25, 0, 100); }
+
+  40% {
+    -webkit-transform: matrix(0, -0.25, 0.25, 0.25, 0, 150); }
+
+  45% {
+    -webkit-transform: matrix(-1.5, -1.25, -1.25, -0.75, 300, 350); }
+
+  55% {
+    -webkit-transform: matrix(0, 0.25, 0.25, 0.25, 300, 350); }
+
+  60% {
+    -webkit-transform: matrix(1, -0.75, 1.25, -0.75, 100, 350); }
+
+  65% {
+    -webkit-transform: matrix(-0.5, -0.75, -0.25, -0.75, 400, 350); }
+
+  70% {
+    -webkit-transform: matrix(1, -0.75, 1.25, -0.75, 100, 350); }
+
+  80% {
+    -webkit-transform: matrix(0, 0.85, 0.25, 0.85, 300, 30); }
+
+  90% {
+    -webkit-transform: matrix(-1, 0.85, 0.25, 0.85, 300, 30); }
+
+  100% {
+    -webkit-transform: matrix(-0.25, 0, -0.25, 0.5, 50, 0); } }
+
+div.triangle:nth-child(1) {
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  width: 200px;
+  height: 200px;
+  -webkit-transform-origin: 0% 0%;
+  background-image: url("http://dl.dropbox.com/u/3589634/resource/image/misawa.PNG");
+  -webkit-animation: dance 3s linear 0s infinite; }

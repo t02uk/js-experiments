@@ -1,4 +1,4 @@
-# nuxt-practice
+# js-experiments
 
 > My excellent Nuxt.js project
 

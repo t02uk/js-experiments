@@ -1,0 +1,32 @@
+<script type="text/javascript">
+function run(type) {
+  var start = new Date();
+  
+  cls();
+  $('result').value = "";
+  p("start calculation");
+  p(" type = " + type);
+  var primes = eval("Eratosthenes." + type + "(10000)");
+  $('result').value = primes.join(" ");
+  p("complete... cost = " + (new Date() - start) + ", " + "found " + primes.length + " prime number");
+}
+
+function cls() {
+  $('status').value = "";
+}
+  
+function p(msg) {
+  $('status').value += msg + "\n";
+}
+</script>
+
+<form style="margin-top: 20px">
+  <textarea id="result" rows="14" style="width:100%;" wrap="on"></textarea>
+  <textarea id="status" rows="5" style="width:100%;" wrap="on"></textarea>
+  <button type="button" onclick="run('general');">general</button>
+  <button type="button" onclick="run('regexp');">regexp</button>
+  <button type="button" onclick="run('canvas');">Canvas</button>
+</form>
+
+<canvas id='prime' height="10px"></canvas>
+<canvas id='work' height="1px" width="10px"></canvas>

@@ -1,0 +1,26 @@
+body { background-color: #DDDDDD; font: sans-serif; }
+
+#coffee {
+}
+
+#log {
+  height:6em;
+  background:#fff;
+  border:solid 1px #999;
+  overflow: scroll;
+  font-size: small;
+}
+
+#log .info,
+#log .error {
+  border-bottom: 1px solid #ccc;
+  margin-left: 4px;
+}
+
+#log .info {
+  color: #00f;
+}
+
+#log .error {
+  color: #f00;
+}

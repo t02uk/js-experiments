@@ -1,0 +1,12 @@
+* {
+  margin: 0px;
+  padding: 0px;
+}
+canvas {
+  position: relative;
+  left: 0px;
+  top: 0px;
+  width: 100%;
+  height: 95%;
+  /*overflow: hidden;*/
+}

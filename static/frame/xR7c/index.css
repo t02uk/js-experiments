@@ -1,0 +1,203 @@
+/* 全焼セレクタ */
+* {
+  margin: 0px;
+  padding: 0px;
+}
+
+body {
+  background-color: #fff;
+  overflow: hidden;
+}
+
+/* div要素は無条件で3Dにする */
+div {
+  -webkit-transform-style: preserve-3d;
+}
+
+
+/* カメラ */
+#camera {
+  position: absolute;
+  left: 220px;
+  top: 220px;
+  -webkit-perspective: 1000;
+  -webkit-perspective-origin: 0% 0% 0%;
+}
+
+
+/* カメラワーク */
+@-webkit-keyframes camerawork {
+    0% {
+        -webkit-transform: translate3d(0px, 0px, -100px) rotateX(40deg) rotateZ(0deg);
+    }
+    50% {
+        -webkit-transform: translate3d(0px, 0px, -400px) rotateX(70deg) rotateZ(180deg);
+    }
+    100% {
+        -webkit-transform: translate3d(0px, 0px, -100px) rotateX(40deg) rotateZ(360deg);
+    }
+}
+
+/* 視界、変換座標の適用 */
+#view {
+  -webkit-animation: camerawork 10s linear 0s infinite;
+}
+
+/* 回転 */
+@-webkit-keyframes roll {
+    0% {
+        -webkit-transform: rotateX(0deg);
+    }
+    100% {
+        -webkit-transform: rotateX(360deg);
+    }
+}
+
+/* バウンド */
+@-webkit-keyframes bounce {
+    0% {
+        -webkit-transform: translate3d(0px, 0px, 55px);
+    }
+    100% {
+        -webkit-transform: translate3d(0px, 0px, 300px);
+    }
+}
+
+/* サイコロ用 バウンドアニメーション */
+.m_bounce {
+  -webkit-animation: bounce 1s ease-out 0s infinite alternate;
+}
+
+/* サイコロ　面の集合 */
+.dice {
+  -webkit-animation: roll 8s linear 0s infinite;
+}
+
+/* 面 */
+.face {
+  border: 3px solid #999;
+  position: absolute;
+  display: inline-block;
+  left: -50px;
+  top: -50px;
+  width: 100px;
+  height: 100px;
+  background: #fff;
+}
+
+.face:nth-child(1) {
+  -webkit-transform:  rotateX(0deg) translate3d(0px, 0px, 50px);
+}
+
+.face:nth-child(2) {
+  -webkit-transform: rotateY(90deg) translate3d(0px, 0px, 50px) ;
+}
+
+.face:nth-child(3) {
+  -webkit-transform: rotateX(90deg) translate3d(0px, 0px, 50px) ;
+}
+
+.face:nth-child(4) {
+  -webkit-transform: rotateX(270deg) translate3d(0px, 0px, 50px) ;
+}
+
+.face:nth-child(5) {
+  -webkit-transform: rotateY(270deg) translate3d(0px, 0px, 50px) ;
+}
+
+.face:nth-child(6) {
+  -webkit-transform: rotateY(0deg) translate3d(0px, 0px, -50px) ;
+}
+
+/* 点の設定 */
+.face:after {
+  border-radius: 30px;
+  background: #999;
+  position: absolute;
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  content: '';
+}
+
+/* Point */
+.face:nth-child(1):after {
+  background: #d11;
+  left: 40px;
+  top: 40px;
+}
+
+.face:nth-child(2):after {
+  left: 20px;
+  top: 20px;
+  -webkit-box-shadow: 40px 40px 0 #999;
+}
+
+.face:nth-child(3):after {
+  left: 15px;
+  top: 15px;
+  -webkit-box-shadow: 50px 50px 0 #999,
+    25px 25px 0 #999
+  ;
+}
+
+.face:nth-child(4):after {
+  left: 15px;
+  top: 15px;
+  -webkit-box-shadow: 50px 0px 0 #999,
+    0px 50px 0 #999,
+    50px 50px 0 #999
+  ;
+}
+
+.face:nth-child(5):after {
+  left: 15px;
+  top: 15px;
+  -webkit-box-shadow: 50px 0px 0 #999,
+    0px 50px 0 #999,
+    50px 50px 0 #999,
+    25px 25px 0 #999
+  ;
+}
+
+.face:nth-child(6):after {
+  left: 15px;
+  top: 15px;
+  -webkit-box-shadow: 50px 0px 0 #999,
+    0px 50px 0 #999,
+    50px 50px 0 #999,
+    0px 25px 0 #999,
+    50px 25px 0 #999
+  ;
+}
+
+
+.refrect {
+    -webkit-transform: scale3d(1, 1, -1);
+}
+
+.dice_refrect {
+    /*
+    opacity: 0.4;
+    */
+}
+
+/* 床 */
+.floor {
+  border-radius: 800px;
+  opacity: 0.7;
+  position: absolute;
+  width: 1600px;
+  height: 1600px;
+  left: -800px;
+  top: -800px;
+  /* 参考 http://jsdo.it/ckazu/hvCi */
+  background-image: -webkit-gradient(
+      radial,
+      center center, 0,
+      center center, 8,
+      from(          rgba(216, 216, 216, 1)),
+      color-stop(.75,rgba(255, 255, 255, 1)),
+      to(            rgba(255, 255, 255, 1)));
+  -webkit-background-size: 40px 40px;
+}

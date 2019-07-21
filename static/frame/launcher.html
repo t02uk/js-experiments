@@ -1,0 +1,39 @@
+<html>
+<body id="app" style="width: 100%; height: 100%; margin: 0px; padding: 0px;"></body>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/prototype/1.7.3/prototype.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r68/three.min.js"></script>
+<script type="text/javascript" src="../lib/misc.js"></script>
+<script type="text/javascript" src="../lib/misc-ext.js"></script>
+
+<script type="text/javascript">
+  const path = new URL(window.location).searchParams.get('path')
+
+  async function loadHtml() {
+    return await fetch([`${path}/index.html`].join("/"))
+      .then((response) => response.text())
+      .then((text) => document.body.innerHTML = text)
+  }
+
+  const loadCss = new Promise(resolve => {
+    const link = document.createElement('link')
+    link.setAttribute('rel', 'stylesheet')
+    link.setAttribute('href', `${path}/index.css`)
+    document.body.parentElement.appendChild(link)
+    link.onload = resolve
+  })
+
+  const loadScript = new Promise(resolve => {
+    const script = document.createElement('script')
+    script.setAttribute('type', 'text/javascript')
+    script.setAttribute('src', `${path}/index.js`)
+    document.body.parentElement.appendChild(script)
+    script.onload = resolve
+  })
+
+  loadHtml().then(loadCss).then(loadScript)
+
+</script>
+
+
+</html>

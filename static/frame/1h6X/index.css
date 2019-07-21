@@ -1,0 +1,145 @@
+/* 全焼セレクタ */
+* {
+  margin: 0px;
+  padding: 0px;
+}
+
+body {
+  background-color: #000;
+  overflow: hidden;
+}
+
+/* div要素は無条件で3Dにする */
+div {
+  -webkit-transform-style: preserve-3d;
+}
+
+
+/* カメラ */
+#camera {
+  position: absolute;
+  left: 220px;
+  top: 220px;
+  -webkit-perspective: 1000;
+  -webkit-perspective-origin: 0% 0% 0%;
+}
+
+
+/* カメラワーク */
+@-webkit-keyframes camerawork {
+    0% {
+        -webkit-transform: translate3d(0px, 0px, -1000px) rotateX(40deg) rotateZ(0deg);
+    }
+    50% {
+        -webkit-transform: translate3d(0px, 0px, -1000px) rotateX(70deg) rotateZ(0deg);
+    }
+    100% {
+        -webkit-transform: translate3d(0px, 0px, -1000px) rotateX(40deg) rotateZ(0deg);
+    }
+}
+
+/* 視界、変換座標の適用 */
+#view {
+  -webkit-animation: camerawork 20s ease-in-out 0s infinite;
+}
+
+
+/* てふてふのアニメーション */
+@-webkit-keyframes walk_around {
+    0% {
+		-webkit-transform:
+			rotateZ(0deg)
+			translate3d(00px, 0px, 100px)
+			rotateZ(90deg)
+			translate3d(400px, 0px, 100px)
+		;
+    }
+    100% {
+		-webkit-transform:
+			rotateZ(360deg)
+			translate3d(00px, 0px, 100px)
+			rotateZ(90deg)
+			translate3d(400px, 0px, 100px)
+		;
+    }
+} .tefutefu {
+	-webkit-animation: walk_around 9s linear 0s infinite;
+}
+
+/* 羽 */
+.wing {
+  position: absolute;
+  display: inline-block;
+  left: -52px;
+  top: -97px;
+  width: 103px;
+  height: 194px;
+  background-image: url("http://dl.dropbox.com/u/3589634/resource/image/tefutefu.png");
+}
+/* 羽ばたきアクション */
+@-webkit-keyframes flap_left {
+    0% {
+		-webkit-transform:
+			rotatey(-20deg)
+			translate3d(-52px, 0px, 0px)
+		;
+    }
+    100% {
+		-webkit-transform:
+			rotatey(30deg)
+			translate3d(-52px, 0px, 0px)
+		;
+    }
+} .left_wing {
+  -webkit-animation: flap_left 0.4s ease-in-out 0s infinite alternate;
+}
+
+@-webkit-keyframes flap_right {
+    0% {
+		-webkit-transform:
+			scaleZ(-1)
+			rotatey(-20deg)
+			scaleX(-1)
+			translate3d(-52px, 0px, -0px)
+		;
+    }
+    100% {
+		-webkit-transform:
+			scaleZ(-1)
+			rotatey(30deg)
+			scaleX(-1)
+			translate3d(-52px, 0px, -0px)
+		;
+    }
+} .right_wing {
+  -webkit-animation: flap_right 0.4s ease-in-out 0s infinite alternate;
+}
+
+/** 陰 */
+.shadow {
+	-webkit-transform: matrix3d(
+	  0.5,     0,     0, 0.0004,
+		0,   0.5,     0,      0,
+		0,     0, 0.002,      0,
+		0,     0,     3,      1
+	);
+	-webkit-filter: brightness(-100%) brightness(40%) blur(10px);
+}
+/* 床 */
+.floor {
+  border-radius: 800px;
+  opacity: 0.7;
+  position: absolute;
+  width: 1600px;
+  height: 1600px;
+  left: -800px;
+  top: -800px;
+  background-image: -webkit-gradient(
+      radial,
+      center center, 0,
+      center center, 800,
+      from(          rgba(255, 255, 255, 1)),
+      color-stop(.15,rgba(255, 255, 255, 1)),
+      color-stop(.55,rgba(255, 255, 200, 1)),
+	  to(            rgba(  0,   0,   0, 0)));
+}

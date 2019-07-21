@@ -1,0 +1,61 @@
+* {
+	margin:0px; padding: 0px;
+}
+
+body {
+	overflow: hidden;
+    font-size: 12px;
+	background: #000;
+}
+
+.t3 {
+	font-family:'ヒラギノ明朝 Pro W3','Hiragino Mincho Pro','ＭＳ Ｐ明朝','MS PMincho',serif;
+	font-size: 13px;
+	position: absolute;
+	padding: 10px;
+	left: -245px;
+	top: -245px;
+	background: #000;
+	width: 490px;
+	height: 490px;
+	color: #f00;
+}
+
+.t3:nth-child(1) {
+	-webkit-transform: rotateY(0deg) translate3d(0px, 0px, -250px);
+}
+.t3:nth-child(2) {
+	-webkit-transform: rotateY(90deg) translate3d(0px, 0px, -250px);
+}
+.t3:nth-child(3) {
+	-webkit-transform: rotateY(180deg) translate3d(0px, 0px, -250px);
+}
+.t3:nth-child(4) {
+	-webkit-transform: rotateY(270deg) translate3d(0px, 0px, -250px);
+}
+.t3:nth-child(5) {
+	-webkit-transform: rotateX(90deg) translate3d(0px, 0px, -250px);
+}
+.t3:nth-child(6) {
+	-webkit-transform: rotateX(-90deg) translate3d(0px, 0px, -250px);
+}
+
+div {
+	-webkit-transform-origin: 50% 50%;
+	-webkit-transform-style: preserve-3d;
+}
+
+
+#camera {
+	position: relative;
+	left: 230px;
+	top: 230px;
+	-webkit-perspective-origin: 0% 0%;
+}
+
+#view {
+	position: relative;
+	left: 0px;
+	top: 0px;
+	-webkit-perspective-origin: 0% 0%;
+}

@@ -1,0 +1,48 @@
+<!--
+jsdo.itでCoffeeScriptを試す場合のデモです
+JavaScript領域に前後を/*と*/でくくってCoffeeScriptを記述してください
+jQueryが使用できます（他に必要なライブラリがあれば「＋」から読みこめば実行できます）
+-->
+<script src="http://jashkenas.github.com/coffee-script/extras/coffee-script.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
+<script>
+</script>
+<button onclick="(undefined, run());" accesskey="1">run(F4)</button>
+<textarea rows="22" cols="60" id="coffee">
+Array::each = Array::forEach
+
+Array::map = (f) ->
+  result = []
+  @each((x) ->
+    result.push(f(x)))
+  result
+
+Array:filter = (f) ->
+  result = []
+  @each((x) ->
+    result.push(x if f(x)))
+  result
+
+Array::foldLeft = (i, f) ->
+  @each((x) ->
+    i = f(i, x))
+  i
+
+
+fizzbuzz = (n) ->
+  [1..n]
+  .filter (n) ->
+    n % 2 is 0
+  .map (n) ->
+    if n % 15 is 0 then "FizzBuzz"
+    else if n %  3 is 0 then "Fizz"
+    else if n %  5 is 0 then "Buzz"
+    else n
+  .foldLeft("", (i, n) ->
+    i + ", " + n)
+
+_log.info(fizzbuzz(100))
+</textarea>
+<span>log </span><button onclick="(undefined, cls());">clear</button>
+<div id="log">
+</div>

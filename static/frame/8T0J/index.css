@@ -1,0 +1,17 @@
+* {
+    margin: 0px;
+    padding: 0px;
+}
+
+body {
+  overflow: hidden;
+}
+
+canbas {
+    width: 465px;
+    height: 465px;
+}
+
+video {
+    display: hidden;
+}
