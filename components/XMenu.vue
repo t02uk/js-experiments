@@ -58,7 +58,7 @@ export default {
   data: () => {
     return {
       menuItems: [],
-      menuName: '↑ Select any title'
+      menuName: ''
     }
   },
   mounted: function() {
@@ -66,6 +66,7 @@ export default {
     Axios.get('json/user.json').then((response) => {
       self.menuItems = response.data
     })
+    this.menuName = '↑ Select any title'
   },
   methods: {
     clicked: function(menuItem) {
