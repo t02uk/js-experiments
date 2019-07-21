@@ -63,7 +63,7 @@ export default {
   },
   mounted: function() {
     const self = this
-    Axios.get('/json/user.json').then((response) => {
+    Axios.get('json/user.json').then((response) => {
       self.menuItems = response.data
     })
   },
