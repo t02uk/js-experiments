@@ -181,7 +181,11 @@
 		act: function() {
 			var self = this;
 			if((self.cnt % 256) === 0) {
-				self.cameraWork = self.cameraWorks.randomSelect()();
+			  if (self.cameraWork) {
+          self.cameraWork = self.cameraWorks.randomSelect()();
+        } else {
+			    self.cameraWork = self.cameraWorks[0]();
+        }
 			}
 			self.cnt++;
 			self.cameraWork();
@@ -209,7 +213,7 @@
 
 		God.act();
 		God.draw();
-		
+
 		window.setTimeout(arguments.callee.curry(c + 1), 33);
 	})(0);
 })();

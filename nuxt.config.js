@@ -59,7 +59,5 @@ export default {
   generate: {
     fallback: true
   },
-  router: {
-    base: '/js-experiments/'
-  }
+  router: routerBase.router
 }

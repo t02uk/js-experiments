@@ -4,6 +4,12 @@ export const state = () => ({
 
 export const mutations = {
   changePath(state, path) {
-    state.path = `frame/launcher.html?path=${path}`
+    state.path = path
+  }
+}
+
+export const getters = {
+  path(state) {
+    return state.path
   }
 }

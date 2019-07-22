@@ -1,12 +1,12 @@
 <template>
   <footer>
-    <span class="poweredBy">
+    <span class="powered-by">
       powered by <a href="https://nuxtjs.org/">Nuxt.js</a></span
     >
   </footer>
 </template>
 
-<style>
+<style scoped>
 footer {
   display: flex;
   align-items: center;
@@ -18,7 +18,7 @@ footer {
   top: 0;
 }
 
-.poweredBy {
+.powered-by {
   margin-left: 1rem;
   color: #fff;
   font-size: 80%;

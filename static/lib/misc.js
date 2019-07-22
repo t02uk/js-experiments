@@ -1,18 +1,18 @@
 (function() {
 
-  
+
   Object.extend(Array.prototype, {
     chain: function(f) {
       var ret = _V(this[0]);
       if(f(ret)) return ret;
-      
+
       for(var i = 1, l = this.length; i < l; i++) {
         ret = _V(this[i], ret);
         if(f(ret)) return ret;
       }
       return ret;
     },
-    
+
     andThen: function() {
       return this.chain(function(e) {return e === null;});
     },
@@ -21,7 +21,7 @@
       return this.chain(function(e) {return e !== null;});
     }
   });
-  
+
   Object.extend(Number.prototype, {
     toRadian: function() {
       return 2.0 * Math.PI * this;
@@ -52,7 +52,7 @@
       return this.start + (this.end - this.start).randf();
     }
   });
-  
+
   window._V = function(a, b) {
     if(a instanceof Function) return (a(_V(b)));
     else return a;
@@ -237,7 +237,7 @@
     },
     translate: function(a) {
       if(!(a instanceof Array)) a = Array.prototype.slice.call(arguments);
-      
+
       if(this[0] instanceof Array) return this.map(function(x) {
         return x.zip2(a, function(e) {
           return e[0] + e[1];
@@ -439,13 +439,13 @@
     top: 0.5,
     bottom: -0.5,
     viewAngle: 1.5,
-    
+
     // device space
     left2d: 0.0,
     right2d: 1.0,
     top2d: 0.0,
     bottom2d: 1.0,
-    
+
     // (deprecated) draw option
     softclip: true,
 
@@ -473,11 +473,11 @@
        self.height = self.canvas.height;
      }
 
-      // 3d 
+      // 3d
       this.pos = [0, 0, 1];
       this.upTo = [0, 1, 0];
       this.gazeTo = [0, 0, 0];
-      
+
       this.viewMatrix = new Array(4).fill(new Array(4).fill(0));
 
       this.projMatrix = (function() {
@@ -575,7 +575,7 @@
     font: function(type, size, style) {
       if(type instanceof Array) return DCore.prototype.font.apply(this, type);
       if(typeof size === "number") size = this.toScr(size);
-      this.ctx.font = 
+      this.ctx.font =
         [(style) ? style : ""
         ,(!size) ? 16 : (size.toString().match(/[^0-9]$/)) ? size : size + "pt"
         ,(type || "Serif")].join(" ");
@@ -633,7 +633,7 @@
           clipPos[2] *= reciprocal;
           clipPos[3]  = 1.0;
         } else {
-          clipPos[2] = -1;
+          clipPos[2] *= -1;
         }
 
         this.backclip = clipPos[3] < 0;
@@ -647,17 +647,19 @@
     },
     toWorld2dParallel: function(ps, f) {
       var result = new Array(ps.length);
+      var areAllBackground = true;
       for(var i = 0, l = ps.length; i < l; i++) {
         var p = this.toWorld2d(ps[i]);
-        if(p[2] < 0) return null;
+        if(p[2] < 0) areAllBackground = false;
         result[i] = p.slice(0, f ? 3 : 2);
       }
+      if (!areAllBackground) return null;
       return result;
     },
     // convert world coordinate to screen coordinate
     // set camera position
     //  p: posiiton of camera
-    //  g: gaze to 
+    //  g: gaze to
     //  u: upto
     gazeFrom: function(p, g, u) {
       if(p) this.pos = p;
@@ -752,7 +754,7 @@
 
       ps = this.toWorld2dParallel(ps);
       if(!ps) return this;
-      
+
       for(var i = 0, l = ps.length; i < l; i++) {
         var p = this.toScr(ps[i]);
         if(i === 0) ctx.moveTo(p[0], p[1]);
@@ -768,7 +770,7 @@
 
       ps = this.toWorld2dParallel(ps);
       if(!ps) return this;
-      
+
       for(var i = 0, l = ps.length; i < l; i++) {
         var p = this.toScr(ps[i]);
         if(i === 0) ctx.moveTo(p[0], p[1]);
@@ -784,7 +786,7 @@
 
       ps = this.toWorld2dParallel(ps);
       if(!ps) return this;
-      
+
       for(var i = 0, l = ps.length; i < l; i++) {
         var p = this.toScr(ps[i]);
         if(i === 0) ctx.moveTo(p[0], p[1]);
@@ -803,7 +805,7 @@
         var p = this.toScr(ps[i][0]);
         if(i === 0) ctx.moveTo(p[0], p[1]);
         else if(!ps[i][1]) ctx.lineTo(p[0], p[1]);
-        else { 
+        else {
           var p2 = this.toScr(ps[++i][0]);
           ctx.quadraticCurveTo(p[0], p[1], p2[0], p2[1]);
         }
@@ -885,8 +887,8 @@
       return this;
     },
     // reset canvas coordinate space
-    reset: function() { 
-      this.ctx.setTransform(1.0, 0.0, 
+    reset: function() {
+      this.ctx.setTransform(1.0, 0.0,
                             0.0, 1.0,
                             0.0, 0.0);
       return this;
@@ -902,7 +904,7 @@
     // translate -> scale -> rotate (experiments)
     tsr: function(p) {
       var d = this;
-      
+
       d.translate(p);
       return function(s) {
         d.scale(s);
@@ -955,7 +957,7 @@
     // 最速チュパカブラ研究会 - Canvasによる3Dテクスチャマッピングとパフォーマンスチューニング（仮題）
     // http://d.hatena.ne.jp/gyuque/20090211#1234364019
     //
-    // 
+    //
     transformTo: function(from, to, drawing) {
       // check
       if(!from) throw "from is abnormal";

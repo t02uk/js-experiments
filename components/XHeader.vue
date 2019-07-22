@@ -1,23 +1,28 @@
 <template>
   <header>
-    <h1><img src="images/beaker.png" class="beaker" /> Experiments</h1>
+    <h1>
+      <img src="images/beaker.png" class="logo" />
+      <span class="header-title">
+        Experiments
+      </span>
+    </h1>
     <div class="separator" />
     <x-menu />
   </header>
 </template>
 
-<style>
+<style scoped>
 header {
   display: flex;
   align-items: center;
   width: 100%;
   background: #000;
-  height: 3.5rem;
+  min-height: 3.5rem;
 }
 
-.beaker {
-  width: 1.2rem;
-  height: 1.2rem;
+.logo {
+  width: 1.5rem;
+  height: 1.5rem;
 }
 
 .separator {
@@ -32,6 +37,13 @@ h1 {
   font-size: 130%;
   margin-left: 0.7rem;
   height: 1rem;
+  vertical-align: bottom;
+}
+
+@media (max-width: 640px) {
+  .header-title {
+    display: none;
+  }
 }
 </style>
 

@@ -4,16 +4,18 @@
       <li
         v-for="menuItem in menuItems"
         v-bind:key="menuItem.path"
-        class="menu-item"
+        class="menu__item"
         v-bind:class="menuItem.class"
         @click="clicked(menuItem)"
+        @mouseover="mouseovered(menuItem)"
+        @mouseleave="mouseleaved()"
       />
     </ul>
-    <effective-text v-bind:text="menuName" class="effectiveText" />
+    <effective-text v-bind:text="menuName" class="effective-text" />
   </div>
 </template>
 
-<style>
+<style scoped>
 .menu-container {
   display: flex;
   justify-content: space-between;
@@ -23,7 +25,7 @@
   margin-top: 4px;
   padding: 0px;
 }
-.menu-item {
+.menu__item {
   display: inline-block;
   width: 9px;
   height: 9px;
@@ -33,16 +35,16 @@
   border: solid 2px #888;
   margin: 2px;
 }
-.menu-item:hover {
+.menu__item:hover {
   cursor: pointer;
   border: solid 2px #fff;
 }
-.menu-item_active {
+.menu__item--active {
   border: solid 2px #fff;
   background: #fff;
 }
 
-.effectiveText {
+.effective-text {
   margin-top: 2px;
 }
 </style>
@@ -58,7 +60,8 @@ export default {
   data: () => {
     return {
       menuItems: [],
-      menuName: ''
+      fixedMenuName: '',
+      temporalMenuName: ''
     }
   },
   mounted: function() {
@@ -66,18 +69,32 @@ export default {
     Axios.get('json/user.json').then((response) => {
       self.menuItems = response.data
     })
-    this.menuName = '↑ Select any title'
+    this.temporalMenuName = '↑ Select any title'
+    this.fixedMenuName = this.temporalMenuName
   },
   methods: {
     clicked: function(menuItem) {
-      this.menuName = menuItem.title
-      for (const itMenuItem of this.menuItems) {
+      for (let i = 0; i < this.menuItems.length; i++) {
+        const itMenuItem = this.menuItems[i]
         itMenuItem.class =
           itMenuItem.path !== menuItem.path
-            ? 'menu-item'
-            : 'menu-item menu-item_active'
+            ? 'menu--item'
+            : 'menu--item menu__item--active'
+        this.$set(this.menuItems, i, itMenuItem)
       }
+      this.fixedMenuName = menuItem.title
       this.$store.commit('menu/changePath', menuItem.path)
+    },
+    mouseovered: function(menuItem) {
+      this.temporalMenuName = menuItem.title
+    },
+    mouseleaved: function() {
+      this.temporalMenuName = ''
+    }
+  },
+  computed: {
+    menuName: function() {
+      return this.temporalMenuName || this.fixedMenuName
     }
   }
 }

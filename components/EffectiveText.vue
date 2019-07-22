@@ -2,7 +2,7 @@
   <canvas class="effective-text" width="300px" height="20px" />
 </template>
 
-<style>
+<style scoped>
 .effective-text {
   background: #fff;
 }
@@ -18,31 +18,35 @@ export default {
   },
   watch: {
     text() {
-      this.counter = 0
+      this.startedAt = +new Date()
     }
   },
   mounted() {
     const self = this
     this.ctx = this.$el.getContext('2d')
-    this.intervalId = setInterval(function() {
+
+    function draw() {
       const ctx = self.ctx
       const width = self.$el.width
       const height = self.$el.height
-      const x = self.counter++ * 3
+      const elapsed = new Date() - self.startedAt
+      const x = (elapsed / 6) % (width * 5)
 
       ctx.beginPath()
       ctx.fillStyle = 'rgb(0, 0, 0)'
       ctx.fillRect(0, 0, width, height)
       ctx.fill()
+
       ctx.font = '12px monospace'
       ctx.textBaseline = 'top'
       ctx.fillStyle = 'rgb(255, 255, 255)'
       ctx.fillText(self.text, 0, 0)
+
       ctx.drawImage(self.$el, x, 0, 1, height, x, 0, width - x, height)
-    }, 33)
-  },
-  beforeDestroy() {
-    clearInterval(this.intervalId)
+
+      requestAnimationFrame(draw)
+    }
+    draw()
   }
 }
 </script>

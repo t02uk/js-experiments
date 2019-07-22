@@ -197,7 +197,7 @@
 
   function Fragments() {
     this.fs = $R(0, 100 - 1).map(function(e) {
-      return new Fragment(); 
+      return new Fragment();
     });
     this.fc = 0;
   }
@@ -257,26 +257,26 @@
      ;
 
     // floor
-    $R(-10, 10, false).map(function(e) {
-      return e * 10;
+    $R(-20, 20, false).map(function(e) {
+      return e * 20;
     }).map(function(e) {
       d
        .rgb(0x33, 0x99, 0x99)
        .line([
-         [e, 0, -100],
-         [e, 0,  100],
+         [e, 0, -400],
+         [e, 0,  400],
        ])
        .stroke()
-      ; 
+      ;
       return e;
     }).each(function(e) {
       d
        .line([
-         [-100, 0,  e],
-         [ 100, 0,  e],
+         [-400, 0,  e],
+         [ 400, 0,  e],
        ])
        .stroke()
-      ; 
+      ;
     });
 
     ap.draw();
