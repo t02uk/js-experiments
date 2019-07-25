@@ -15,19 +15,27 @@
     function God() {}
 
     God.setup = function() {
-      var ambientLight, c, directionalLight;
-      this.deviceWidth = 640.0;
-      this.deviceHeight = 480.0;
+      var ambientLight, c, directionalLight, windowResized,
+        _this = this;
+      c = document.getElementById('c');
+      windowResized = function() {
+        var height, width;
+        width = window.innerWidth;
+        height = window.innerHeight;
+        _this.camera.aspect = width / height;
+        _this.camera.updateProjectionMatrix();
+        return _this.renderer.setSize(width, height);
+      };
       this.scene = new THREE.Scene();
       this.scene.fog = new THREE.FogExp2(0xeeeeff, 0.005);
-      this.camera = new THREE.PerspectiveCamera(75, this.deviceWidth / this.deviceHeight, Math.pow(0.1, 8), Math.pow(10, 3));
+      this.camera = new THREE.PerspectiveCamera(75, 640 / 480, Math.pow(0.1, 8), Math.pow(10, 3));
       this.renderer = new THREE.WebGLRenderer({
         antialias: true
       });
-      this.renderer.setSize(this.deviceWidth, this.deviceHeight);
       this.renderer.setClearColor(0xeeeeff, 0);
-      c = document.getElementById('c');
       c.appendChild(this.renderer.domElement);
+      windowResized();
+      window.addEventListener('resize', windowResized);
       directionalLight = new THREE.DirectionalLight(0xffffff, 0.7);
       directionalLight.position.set(0, 1000, 0);
       this.scene.add(directionalLight);
@@ -212,13 +220,12 @@
 
   window.God = God;
 
+  God.setup();
+
+  God.start();
+
 }).call(this);
 
-window.onload = function() {
-  God.setup();
-  God.start();
-};
-
 /*
-//@ sourceMappingURL=7rays.map
+//@ sourceMappingURL=index.map
 */

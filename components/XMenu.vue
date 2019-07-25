@@ -57,23 +57,27 @@ export default {
   components: {
     EffectiveText
   },
-  data: () => {
+  data() {
     return {
       menuItems: [],
       fixedMenuName: '',
       temporalMenuName: ''
     }
   },
-  mounted: function() {
+  mounted() {
     const self = this
     Axios.get('json/user.json').then((response) => {
       self.menuItems = response.data
+      self.clicked(self.menuItems[0])
     })
-    this.temporalMenuName = '↑ Select any title'
-    this.fixedMenuName = this.temporalMenuName
   },
   methods: {
-    clicked: function(menuItem) {
+    clicked(menuItem) {
+      if (menuItem.confirmMessage) {
+        if (!confirm(menuItem.confirmMessage)) {
+          return
+        }
+      }
       for (let i = 0; i < this.menuItems.length; i++) {
         const itMenuItem = this.menuItems[i]
         itMenuItem.class =
@@ -85,15 +89,15 @@ export default {
       this.fixedMenuName = menuItem.title
       this.$store.commit('menu/changePath', menuItem.path)
     },
-    mouseovered: function(menuItem) {
+    mouseovered(menuItem) {
       this.temporalMenuName = menuItem.title
     },
-    mouseleaved: function() {
+    mouseleaved() {
       this.temporalMenuName = ''
     }
   },
   computed: {
-    menuName: function() {
+    menuName() {
       return this.temporalMenuName || this.fixedMenuName
     }
   }

@@ -8,18 +8,26 @@
     function God() {}
 
     God.setup = function() {
-      var c, i;
-      this.deviceWidth = 640.0;
-      this.deviceHeight = 480.0;
+      var c, i, windowResized,
+        _this = this;
+      c = document.getElementById('c');
+      windowResized = function() {
+        var height, width;
+        width = window.innerWidth;
+        height = window.innerHeight;
+        _this.camera.aspect = width / height;
+        _this.camera.updateProjectionMatrix();
+        return _this.renderer.setSize(width, height);
+      };
+      this.camera = new THREE.PerspectiveCamera(90, 640 / 480, Math.pow(0.1, 8), Math.pow(10, 3));
       this.scene = new THREE.Scene();
       this.scene.fog = new THREE.FogExp2(0x000000, 0.03);
-      this.camera = new THREE.PerspectiveCamera(90, this.deviceWidth / this.deviceHeight, Math.pow(0.1, 8), Math.pow(10, 3));
       this.renderer = new THREE.WebGLRenderer({
         antialias: true
       });
-      this.renderer.setSize(this.deviceWidth, this.deviceHeight);
-      c = document.getElementById('c');
       c.appendChild(this.renderer.domElement);
+      windowResized();
+      window.addEventListener('resize', windowResized);
       this.rays = (function() {
         var _i, _results;
         _results = [];
@@ -422,13 +430,12 @@
 
   window.God = God;
 
+  God.setup();
+
+  God.start();
+
 }).call(this);
 
-window.onload = function() {
-  God.setup();
-  God.start();
-};
-
 /*
-//@ sourceMappingURL=7rays.map
+//@ sourceMappingURL=index.map
 */

@@ -1,8 +1,15 @@
 <template>
   <footer>
     <span class="powered-by">
-      powered by <a href="https://nuxtjs.org/">Nuxt.js</a></span
-    >
+      powered by <a href="https://nuxtjs.org/">Nuxt.js</a>
+    </span>
+    <span class="source-code">
+      Source code of this page is available
+      <a href="https://github.com/t02uk/js-experiments">
+        on GitHub
+      </a>
+      .
+    </span>
   </footer>
 </template>
 
@@ -16,11 +23,17 @@ footer {
 
   position: sticky;
   top: 0;
-}
 
-.powered-by {
-  margin-left: 1rem;
   color: #fff;
   font-size: 80%;
+}
+
+.powered-by,
+.source-code {
+  margin-left: 1rem;
+}
+
+footer a:visited {
+  color: #8ba5ff;
 }
 </style>

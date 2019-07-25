@@ -1,11 +1,24 @@
 [
   {
+    "path": "7rays",
+    "title": "[WebGL] 7rays"
+  },
+  {
+    "path":"u8n0",
+    "title":"[Canvas] Sparkler"
+  },
+  {
     "path":"hCxz",
     "title":"[Canvas] monochrome aquarium"
   },
   {
-    "path": "7rays",
-    "title": "[WebGL] 7rays"
+    "path":"mvww",
+    "title":"[Canvas] Pure canvas 3d Hachune Miku"
+  },
+  {
+    "path":"eavM",
+    "title":"[CSS] Pure CSS Texture Hachune Miku",
+    "confirmMessage":"CSSのみで3Dモデルを表示させるため、初期表示に時間がかかります。\nよろしいですか？"
   },
   {
     "path":"ppRX",
@@ -16,36 +29,17 @@
     "title":"[Canvas] Node Garden in the Cube"
   },
   {
-    "path":"u8n0",
-    "title":"[Canvas] Sparkler"
-  },
-  {
     "path":"re2G",
-    "title":"[Canvas, Audio] IRON-NOTE"
+    "title":"[Canvas, Audio] IRON-NOTE",
+    "confirmMessage":"音がなります"
   },
   {
     "path":"HxAC",
-    "title":"[Canvas] 3D birdoid"
+    "title":"[Canvas] 3D birdoid / Hit space bar to switch camera."
   },
   {
     "path":"iddX",
     "title":"[Canvas] Slime mold LifeGame"
-  },
-  {
-    "path":"mvww",
-    "title":"[Canvas] Pure canvas 3d Hachune Miku"
-  },
-  {
-    "path":"wnAz",
-    "title":"[CSS] Pure CSS 3d Hachune Miku"
-  },
-  {
-    "path":"gQoe",
-    "title":"[CSS] Pure CSS Polygon Hachune Miku"
-  },
-  {
-    "path":"eavM",
-    "title":"[CSS] Pure CSS Texture Hachune Miku"
   },
   {
     "path":"3Ved",
@@ -61,7 +55,8 @@
   },
   {
     "path":"w7hu",
-    "title":"[Canvas, Audio] ping pong arpeggio"
+    "title":"[Canvas, Audio] ping pong arpeggio",
+    "confirmMessage":"音がなります"
   },
   {
     "path":"8LJT",
@@ -81,7 +76,8 @@
   },
   {
     "path":"n4L2",
-    "title":"[Canvas, Audio] visualized drum machine"
+    "title":"[Canvas, Audio] visualized drum machine",
+    "confirmMessage":"音がなります"
   },
   {
     "path":"9Xe5",
@@ -93,6 +89,7 @@
   },
   {
     "path": "land",
-    "title": "[WebGL] A terrain analog radar simulator"
+    "title": "[WebGL] A terrain analog radar simulator",
+    "confirmMessage":"3Dモデルを作成するため、初期表示に時間がかかります。\nよろしいですか？"
   }
 ]

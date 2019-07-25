@@ -1,5 +1,5 @@
 <template>
-  <canvas class="effective-text" width="300px" height="20px" />
+  <canvas class="effective-text" width="350px" height="20px" />
 </template>
 
 <style scoped>
