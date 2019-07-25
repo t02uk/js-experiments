@@ -122,7 +122,7 @@ export default {
       if (!path) {
         return '#'
       }
-      return `https://github.com/t02uk/js-experiments/static/frame/${path}`
+      return `https://github.com/t02uk/js-experiments/tree/master/static/frame/${path}`
     }
   },
   beforeDestroy() {
