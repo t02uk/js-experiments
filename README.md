@@ -16,11 +16,11 @@ $ npm run build
 $ npm run start
 
 # generate static project
-$ npm run generate
+$ npm run generate:gh-pages 
+
+# deploy to GitHub Pages
+$ npm run deploy
 ```
 
 For detailed explanation on how things work, checkout [Nuxt.js docs](https://nuxtjs.org).
 
-## Deploy
-$ npm run generate:gh-pages 
-$ npm run deploy   
