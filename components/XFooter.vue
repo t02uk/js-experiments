@@ -33,6 +33,7 @@ footer {
   margin-left: 1rem;
 }
 
+footer a,
 footer a:visited {
   color: #8ba5ff;
 }
