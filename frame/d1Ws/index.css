@@ -1,0 +1,36 @@
+* {
+    margin:0px; padding: 0px; border-width: 0px;
+    background-color: #fff;
+    overflow: hidden;
+}
+
+body {
+    width: 485px;
+    height: 485px;
+}
+
+.pair {
+    position: relative;
+    display: inline-block;
+    width: 93px;
+    height: 970px;
+    overflow: hidden;
+}
+
+.pair_1 {
+    top: 0px;
+}
+.pair_2 {
+    top: -485px;
+}
+.color {
+    position: relative;
+    display: inline-block;
+    width: 93px;
+    height: 485px;
+}
+
+#cont {
+    height: 485px;
+    overflow: hidden;
+}

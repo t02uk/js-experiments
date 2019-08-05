@@ -1,0 +1,20 @@
+body {
+  background-color: #000;
+  margin: 0px;
+  font-family: cursive;
+  color: #0f0;
+}
+
+ol {
+  list-style-type: none;
+  overflow: auto;
+}
+
+li {
+  counter-increment: c;
+  margin-right: 4px;
+}
+
+li:before {
+  content: counter(c);
+}

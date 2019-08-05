@@ -1,0 +1,50 @@
+body {
+  margin: 0px;
+  padding: 0px;
+}
+
+.keyboard {
+  margin: 10px;
+  margin-top: 160px;
+}
+
+button {
+    width: 32px;
+    height: 32px;
+    border-radius: 6px;
+    -moz-border-radius: 6px;
+    background: #f3f3f3;
+    border: solid 2px #aaa;
+    margin: 1px;
+    -webkit-box-shadow: 2px 2px 4px #aaa;
+    -moz-box-shadow: 2px 3px 2px #ccc;
+    -webkit-transition: -webkit-transform 0.05s ease-out;
+}
+
+button:focus {
+    -webkit-transform: translate(0px, 3px);
+}
+
+button:before {
+    color: #999;
+    text-shadow: -1px -1px 2px #999;
+    content: attr(accesskey);
+}
+
+.line:nth-child(1) {
+    margin-left: 0px;
+}
+.line:nth-child(2) {
+    margin-left: 16px;
+}
+.line:nth-child(3) {
+    margin-left: 32px;
+}
+.line:nth-child(4) {
+    margin-left: 48px;
+}
+
+.fj {
+  text-decoration: underline;
+  color: #999;
+}

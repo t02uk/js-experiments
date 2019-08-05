@@ -1,0 +1,13 @@
+<div id="app"></div>
+
+<script type="text/javascript">
+    const html = fetch(["index.html"].join("/"))
+        .then((response) => response.text())
+        .then((text) => document.getElementById("app").innerHTML = text)
+</script>
+
+<link rel="stylesheet" href="index.css">
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/prototype/1.7.3/prototype.js"></script>
+<script type="text/javascript" src="../../lib/misc.js"></script>
+<script type="text/javascript" src="../../lib/misc-ext.js"></script>
+<script type="text/javascript" src="index.js"></script>

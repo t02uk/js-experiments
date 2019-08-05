@@ -1,0 +1,112 @@
+body {
+    background-color: #000;
+    margin: 0px;
+    overflow: hidden;
+}
+
+a {
+  position: absolute;
+  display: inline-block;
+}
+
+
+/** ゆらぎ **/
+@-webkit-keyframes 'waver' {
+    0.0%   {-webkit-transform: translate(5px, 0px) scale(0.7) rotate( 45deg);}
+    100.0% {-webkit-transform: translate(-5px, 0px) scale(1) rotate(-45deg) ;}
+}
+
+/** パーティクル 重いタイプ **/
+@-webkit-keyframes 'rise_h' {
+    0.0%   {
+      -webkit-transform: translate(200px, 300px);
+      font-size: 30;
+      z-index: 999;
+      opacity: 1;
+      text-shadow:
+        0px 0px 10px #fff;
+      }
+    80% {
+      text-shadow:
+        -1px 0px 20px #99f;
+    }
+    100.0% {
+      -webkit-transform: translate(200px, 230px);
+      z-index: 0;
+      opacity: 0.2;
+      text-shadow:
+         8px  8px 2px #003;
+    }
+}
+
+/** パーティクル 一般タイプ **/
+@-webkit-keyframes 'rise_m' {
+    0.0%   {
+      -webkit-transform: translate(200px, 300px);
+      z-index: 999;
+      opacity: 1;
+      text-shadow:
+        0px 0px 10px #fff;
+    }
+    80% {
+      text-shadow:
+        -1px 0px 10px #99e;
+    }
+    100.0% {
+      -webkit-transform: translate(200px, 150px);
+      z-index: 0;
+      opacity: 0.2;
+      text-shadow:
+       8px  8px 8px #003;
+    }
+}
+
+/** 粒子 **/
+.z:after {
+  color: transparent;
+  font-size: 20px;
+  display: inline-block;
+  content: "●";
+}
+
+
+
+.x:nth-child(1)  { -webkit-animation: 'rise_m' 0.50s ease-in infinite; }
+.x:nth-child(2)  { -webkit-animation: 'rise_m' 0.55s ease-in infinite; }
+.x:nth-child(3)  { -webkit-animation: 'rise_m' 0.60s ease-in infinite; }
+.x:nth-child(4)  { -webkit-animation: 'rise_m' 0.65s ease-in infinite; }
+.x:nth-child(5)  { -webkit-animation: 'rise_m' 0.70s ease-in infinite; }
+.x:nth-child(6)  { -webkit-animation: 'rise_m' 0.75s ease-in infinite; }
+.x:nth-child(7)  { -webkit-animation: 'rise_m' 0.80s ease-in infinite; }
+.x:nth-child(8)  { -webkit-animation: 'rise_m' 0.85s ease-in infinite; }
+.x:nth-child(9)  { -webkit-animation: 'rise_m' 0.90s ease-in infinite; }
+.x:nth-child(10) { -webkit-animation: 'rise_m' 0.95s ease-in infinite; }
+.x:nth-child(11) { -webkit-animation: 'rise_h' 0.25s ease-in infinite; }
+.x:nth-child(12) { -webkit-animation: 'rise_h' 0.28s ease-in infinite; }
+.x:nth-child(13) { -webkit-animation: 'rise_h' 0.31s ease-in infinite; }
+.x:nth-child(14) { -webkit-animation: 'rise_h' 0.34s ease-in infinite; }
+.x:nth-child(15) { -webkit-animation: 'rise_h' 0.37s ease-in infinite; }
+.x:nth-child(16) { -webkit-animation: 'rise_h' 0.40s ease-in infinite; }
+.x:nth-child(17) { -webkit-animation: 'rise_h' 0.43s ease-in infinite; }
+.x:nth-child(18) { -webkit-animation: 'rise_h' 0.46s ease-in infinite; }
+.x:nth-child(19) { -webkit-animation: 'rise_h' 0.49s ease-in infinite; }
+
+.y1 { -webkit-animation: 'waver' 0.8s ease-in-out infinite alternate; }
+.y2 { -webkit-animation: 'waver' 0.7s ease-in-out infinite alternate; }
+.y3 { -webkit-animation: 'waver' 0.6s ease-in-out infinite alternate; }
+.y4 { -webkit-animation: 'waver' 0.5s ease-in-out infinite alternate; }
+.y5 { -webkit-animation: 'waver' 1.1s ease-in-out infinite alternate; }
+.y6 { -webkit-animation: 'waver' 1.2s ease-in-out infinite alternate; }
+.y7 { -webkit-animation: 'waver' 1.3s ease-in-out infinite alternate; }
+.y8 { -webkit-animation: 'waver' 1.4s ease-in-out infinite alternate; }
+.y9 { -webkit-animation: 'waver' 1.5s ease-in-out infinite alternate; }
+.y10 { -webkit-animation: 'waver' 0.5s ease-in-out infinite alternate; }
+.y11 { -webkit-animation: 'waver' 0.6s ease-in-out infinite alternate; }
+.y12 { -webkit-animation: 'waver' 0.7s ease-in-out infinite alternate; }
+.y13 { -webkit-animation: 'waver' 0.8s ease-in-out infinite alternate; }
+.y14 { -webkit-animation: 'waver' 0.9s ease-in-out infinite alternate; }
+.y15 { -webkit-animation: 'waver' 0.9s ease-in-out infinite alternate; }
+.y16 { -webkit-animation: 'waver' 0.9s ease-in-out infinite alternate; }
+.y17 { -webkit-animation: 'waver' 0.9s ease-in-out infinite alternate; }
+.y18 { -webkit-animation: 'waver' 0.9s ease-in-out infinite alternate; }
+.y19 { -webkit-animation: 'waver' 0.9s ease-in-out infinite alternate; }

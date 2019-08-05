@@ -1,0 +1,338 @@
+/* 全セレクタでいろいろ */
+* {
+    margin: 0px;
+    padding: 0px;
+}
+
+/* お決まり */
+body {
+    background-color: #fff;
+    overflow: hidden;
+}
+
+/* div要素は無条件で3Dにする */
+div {
+  -webkit-transform-style: preserve-3d;
+}
+
+
+/* 花びら、影の設定。基礎パーツとして楕円形を描画し、形は下で */
+.petal:before, .petal:after, .shadow:before, .shadow:after {
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    content: "";
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    -webkit-border-radius-top-left: 40px;
+    -webkit-border-radius-bottom-right: 40px;
+    -webkit-border-radius-top-right: 0px;
+    -webkit-border-radius-bottom-left: 0px;
+    border-radius: 40px 0px;
+    /*background: #fcc;*/
+    background: -webkit-gradient(linear, left top, left bottom, from(#fcc), to(#ffdcec));
+}
+
+/* 花びら影の色を定義 */
+.shadow:before, .shadow:after {
+    background: #e9e9e0;
+}
+
+/* 花びらの本体。before/afterで角度をずらし表示させ花びらを表現 */
+.petal:before, .shadow:before {
+    -webkit-transform: rotate(-38deg);
+    -webkit-transform-origin: 0% 100%;
+}
+.petal:after. shadow:after {
+    -webkit-transform: rotate(-52deg);
+    -webkit-transform-origin: 0% 100%;
+}
+
+/* 視界 視界位置を画面中央に持っていくこと、3Dの設定を担当 */
+#camera {
+  position: absolute;
+  left: 230px;
+  top: 230px;
+  -webkit-perspective: 500;
+  -webkit-perspective-origin: 0% 0%;
+  -webkit-transform: translate3d(0px, 0px, 0px);
+}
+
+/* カメラ用アニメーション */
+@-webkit-keyframes camerawork {
+    0% {
+      -webkit-transform: translate3d(0px, 1200px, 0px) rotateX(180deg) rotateZ(0deg);
+    }
+    34.999% {
+      -webkit-transform: translate3d(0px, 0px, -3000px) rotateX(-30deg) rotateZ(0deg);
+    }
+    35.0% {
+      -webkit-transform: translate3d(1000px, 0px, -2500px) rotateX(30deg) rotateZ(0deg);
+    }
+    69.999% {
+      -webkit-transform: translate3d(-300px, 0px, -100px) rotateX(90deg) rotateZ(360deg);
+    }
+    70.0% {
+      -webkit-transform: translate3d(0px, 0px, -3000px) rotateX(0deg) rotateZ(0deg);
+    }
+    82.5% {
+      -webkit-transform: translate3d(0px, 1000px, -100px) rotateX(180deg) rotateZ(0deg);
+    }
+    100% {
+      -webkit-transform: translate3d(20px, 500px, 1000px) rotateX(90deg) rotateZ(0deg);
+    }
+}
+
+/* 視界、変換座標の適用 */
+#view {
+  -webkit-animation: camerawork 40s linear 0s infinite;
+}
+
+/* 落下アニメーション */
+@-webkit-keyframes fall {
+    0.0% {
+      opacity: 0.0;
+      -webkit-transform: translate3d(0px, 0px, 4000px) rotateZ(0deg);
+    }
+    100% {
+      opacity: 1.0;
+      -webkit-transform: translate3d(0px, 0px, 20px) rotateZ(720deg);
+    }
+}
+
+/* Z座標を0倍に伸縮 影用 */
+.z0 {
+   -webkit-transform: scale3d(1, 1, 0);
+}
+
+/* 波紋 */
+.ripple {
+  width: 40px;
+  height: 40px;
+  border: 4px solid #ccf;
+  border-radius: 80px;
+  -webkit-border-radius: 80px;  
+}
+
+/* 波紋が広がるアニメーション。
+   花びらが水面に落下した瞬間のみ動かすため、フレーム定義が */
+@-webkit-keyframes spread {
+    0% {
+      opacity: 0.9;
+      border: 4px solid #ccf;
+      -webkit-transform: scale3d(1, 1, 1);
+    }
+    7.999% {
+      opacity: 0.0;
+      border: 4px solid #fff;
+      -webkit-transform: scale3d(3, 3, 1);
+    }
+    8% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 0;
+    }
+}
+.za1 { -webkit-transform-origin: 0% 0% 0%; -webkit-animation: fall 5.01s linear 1.94s infinite; }
+.za2 { -webkit-transform-origin: 0% 0% 0%; -webkit-animation: fall 4.89s linear 4.40s infinite; }
+.za3 { -webkit-transform-origin: 0% 0% 0%; -webkit-animation: fall 4.90s linear 0.62s infinite; }
+.za4 { -webkit-transform-origin: 0% 0% 0%; -webkit-animation: fall 5.70s linear 3.43s infinite; }
+.za5 { -webkit-transform-origin: 0% 0% 0%; -webkit-animation: fall 3.87s linear 2.66s infinite; }
+.za6 { -webkit-transform-origin: 0% 0% 0%; -webkit-animation: fall 5.44s linear 0.88s infinite; }
+.za7 { -webkit-transform-origin: 0% 0% 0%; -webkit-animation: fall 5.37s linear 3.26s infinite; }
+.za8 { -webkit-transform-origin: 0% 0% 0%; -webkit-animation: fall 4.50s linear 3.41s infinite; }
+.za9 { -webkit-transform-origin: 0% 0% 0%; -webkit-animation: fall 3.39s linear 3.14s infinite; }
+.za10 { -webkit-transform-origin: 0% 0% 0%; -webkit-animation: fall 5.05s linear 3.54s infinite; }
+.za11 { -webkit-transform-origin: 0% 0% 0%; -webkit-animation: fall 4.41s linear 0.61s infinite; }
+.za12 { -webkit-transform-origin: 0% 0% 0%; -webkit-animation: fall 4.44s linear 0.86s infinite; }
+.za13 { -webkit-transform-origin: 0% 0% 0%; -webkit-animation: fall 4.55s linear 2.00s infinite; }
+.za14 { -webkit-transform-origin: 0% 0% 0%; -webkit-animation: fall 3.67s linear 4.34s infinite; }
+.za15 { -webkit-transform-origin: 0% 0% 0%; -webkit-animation: fall 3.81s linear 0.95s infinite; }
+.za16 { -webkit-transform-origin: 0% 0% 0%; -webkit-animation: fall 5.91s linear 3.86s infinite; }
+.za17 { -webkit-transform-origin: 0% 0% 0%; -webkit-animation: fall 5.92s linear 0.45s infinite; }
+.za18 { -webkit-transform-origin: 0% 0% 0%; -webkit-animation: fall 4.81s linear 1.36s infinite; }
+.za19 { -webkit-transform-origin: 0% 0% 0%; -webkit-animation: fall 4.48s linear 4.02s infinite; }
+.za20 { -webkit-transform-origin: 0% 0% 0%; -webkit-animation: fall 3.40s linear 0.11s infinite; }
+.za21 { -webkit-transform-origin: 0% 0% 0%; -webkit-animation: fall 5.15s linear 1.20s infinite; }
+.za22 { -webkit-transform-origin: 0% 0% 0%; -webkit-animation: fall 5.78s linear 0.57s infinite; }
+.za23 { -webkit-transform-origin: 0% 0% 0%; -webkit-animation: fall 3.46s linear 4.92s infinite; }
+.za24 { -webkit-transform-origin: 0% 0% 0%; -webkit-animation: fall 4.23s linear 1.13s infinite; }
+.za25 { -webkit-transform-origin: 0% 0% 0%; -webkit-animation: fall 5.02s linear 3.03s infinite; }
+.za26 { -webkit-transform-origin: 0% 0% 0%; -webkit-animation: fall 5.51s linear 1.42s infinite; }
+.za27 { -webkit-transform-origin: 0% 0% 0%; -webkit-animation: fall 4.76s linear 0.54s infinite; }
+.za28 { -webkit-transform-origin: 0% 0% 0%; -webkit-animation: fall 3.51s linear 0.47s infinite; }
+.za29 { -webkit-transform-origin: 0% 0% 0%; -webkit-animation: fall 3.46s linear 2.78s infinite; }
+.za30 { -webkit-transform-origin: 0% 0% 0%; -webkit-animation: fall 4.40s linear 2.18s infinite; }
+.za31 { -webkit-transform-origin: 0% 0% 0%; -webkit-animation: fall 5.03s linear 0.66s infinite; }
+.za32 { -webkit-transform-origin: 0% 0% 0%; -webkit-animation: fall 5.00s linear 3.82s infinite; }
+.za33 { -webkit-transform-origin: 0% 0% 0%; -webkit-animation: fall 5.85s linear 1.93s infinite; }
+.za34 { -webkit-transform-origin: 0% 0% 0%; -webkit-animation: fall 4.75s linear 2.33s infinite; }
+.za35 { -webkit-transform-origin: 0% 0% 0%; -webkit-animation: fall 5.85s linear 3.83s infinite; }
+.za36 { -webkit-transform-origin: 0% 0% 0%; -webkit-animation: fall 4.98s linear 0.08s infinite; }
+.za37 { -webkit-transform-origin: 0% 0% 0%; -webkit-animation: fall 5.57s linear 0.61s infinite; }
+.za38 { -webkit-transform-origin: 0% 0% 0%; -webkit-animation: fall 4.58s linear 4.64s infinite; }
+.za39 { -webkit-transform-origin: 0% 0% 0%; -webkit-animation: fall 4.56s linear 2.95s infinite; }
+.za40 { -webkit-transform-origin: 0% 0% 0%; -webkit-animation: fall 6.00s linear 0.44s infinite; }
+.za41 { -webkit-transform-origin: 0% 0% 0%; -webkit-animation: fall 4.42s linear 3.13s infinite; }
+.za42 { -webkit-transform-origin: 0% 0% 0%; -webkit-animation: fall 4.99s linear 4.88s infinite; }
+.za43 { -webkit-transform-origin: 0% 0% 0%; -webkit-animation: fall 5.77s linear 3.18s infinite; }
+.za44 { -webkit-transform-origin: 0% 0% 0%; -webkit-animation: fall 5.07s linear 2.17s infinite; }
+.za45 { -webkit-transform-origin: 0% 0% 0%; -webkit-animation: fall 3.31s linear 1.92s infinite; }
+.za46 { -webkit-transform-origin: 0% 0% 0%; -webkit-animation: fall 4.74s linear 2.11s infinite; }
+.za47 { -webkit-transform-origin: 0% 0% 0%; -webkit-animation: fall 4.92s linear 1.16s infinite; }
+.za48 { -webkit-transform-origin: 0% 0% 0%; -webkit-animation: fall 4.73s linear 3.69s infinite; }
+.za49 { -webkit-transform-origin: 0% 0% 0%; -webkit-animation: fall 3.60s linear 1.39s infinite; }
+.za50 { -webkit-transform-origin: 0% 0% 0%; -webkit-animation: fall 5.60s linear 0.04s infinite; }
+.ru1 { -webkit-transform: rotateY(-34.39deg) rotateZ(-3.71deg); }
+.ru2 { -webkit-transform: rotateY(-39.84deg) rotateZ(-14.32deg); }
+.ru3 { -webkit-transform: rotateY(-38.94deg) rotateZ(-4.83deg); }
+.ru4 { -webkit-transform: rotateY(-21.96deg) rotateZ(-5.31deg); }
+.ru5 { -webkit-transform: rotateY(-28.94deg) rotateZ(-5.10deg); }
+.ru6 { -webkit-transform: rotateY(-29.03deg) rotateZ(-13.74deg); }
+.ru7 { -webkit-transform: rotateY(-25.14deg) rotateZ(-2.97deg); }
+.ru8 { -webkit-transform: rotateY(-36.88deg) rotateZ(-11.56deg); }
+.ru9 { -webkit-transform: rotateY(-20.65deg) rotateZ(-9.49deg); }
+.ru10 { -webkit-transform: rotateY(-25.54deg) rotateZ(-2.45deg); }
+.ru11 { -webkit-transform: rotateY(-39.30deg) rotateZ(-3.93deg); }
+.ru12 { -webkit-transform: rotateY(-32.15deg) rotateZ(-13.43deg); }
+.ru13 { -webkit-transform: rotateY(-38.83deg) rotateZ(-5.04deg); }
+.ru14 { -webkit-transform: rotateY(-29.46deg) rotateZ(-9.61deg); }
+.ru15 { -webkit-transform: rotateY(-22.07deg) rotateZ(-10.37deg); }
+.ru16 { -webkit-transform: rotateY(-33.68deg) rotateZ(-16.46deg); }
+.ru17 { -webkit-transform: rotateY(-21.96deg) rotateZ(-10.68deg); }
+.ru18 { -webkit-transform: rotateY(-26.64deg) rotateZ(-6.93deg); }
+.ru19 { -webkit-transform: rotateY(-31.46deg) rotateZ(-1.96deg); }
+.ru20 { -webkit-transform: rotateY(-37.76deg) rotateZ(-17.17deg); }
+.ru21 { -webkit-transform: rotateY(-36.82deg) rotateZ(-14.90deg); }
+.ru22 { -webkit-transform: rotateY(-39.20deg) rotateZ(-15.60deg); }
+.ru23 { -webkit-transform: rotateY(-23.67deg) rotateZ(-19.81deg); }
+.ru24 { -webkit-transform: rotateY(-38.09deg) rotateZ(-5.26deg); }
+.ru25 { -webkit-transform: rotateY(-29.59deg) rotateZ(-9.87deg); }
+.ru26 { -webkit-transform: rotateY(-31.00deg) rotateZ(-11.59deg); }
+.ru27 { -webkit-transform: rotateY(-32.17deg) rotateZ(-6.77deg); }
+.ru28 { -webkit-transform: rotateY(-36.89deg) rotateZ(-15.01deg); }
+.ru29 { -webkit-transform: rotateY(-28.76deg) rotateZ(-3.13deg); }
+.ru30 { -webkit-transform: rotateY(-39.01deg) rotateZ(-19.83deg); }
+.ru31 { -webkit-transform: rotateY(-35.63deg) rotateZ(-14.53deg); }
+.ru32 { -webkit-transform: rotateY(-36.48deg) rotateZ(-16.92deg); }
+.ru33 { -webkit-transform: rotateY(-29.04deg) rotateZ(-19.17deg); }
+.ru34 { -webkit-transform: rotateY(-21.27deg) rotateZ(-13.68deg); }
+.ru35 { -webkit-transform: rotateY(-38.98deg) rotateZ(-19.74deg); }
+.ru36 { -webkit-transform: rotateY(-37.86deg) rotateZ(-6.17deg); }
+.ru37 { -webkit-transform: rotateY(-23.30deg) rotateZ(-3.92deg); }
+.ru38 { -webkit-transform: rotateY(-26.51deg) rotateZ(-17.45deg); }
+.ru39 { -webkit-transform: rotateY(-24.74deg) rotateZ(-4.90deg); }
+.ru40 { -webkit-transform: rotateY(-28.05deg) rotateZ(-5.08deg); }
+.ru41 { -webkit-transform: rotateY(-28.44deg) rotateZ(-4.68deg); }
+.ru42 { -webkit-transform: rotateY(-27.17deg) rotateZ(-10.76deg); }
+.ru43 { -webkit-transform: rotateY(-36.25deg) rotateZ(-2.68deg); }
+.ru44 { -webkit-transform: rotateY(-36.82deg) rotateZ(-16.73deg); }
+.ru45 { -webkit-transform: rotateY(-34.55deg) rotateZ(-7.29deg); }
+.ru46 { -webkit-transform: rotateY(-21.66deg) rotateZ(-7.90deg); }
+.ru47 { -webkit-transform: rotateY(-24.01deg) rotateZ(-8.11deg); }
+.ru48 { -webkit-transform: rotateY(-27.28deg) rotateZ(-10.65deg); }
+.ru49 { -webkit-transform: rotateY(-28.61deg) rotateZ(-7.15deg); }
+.ru50 { -webkit-transform: rotateY(-29.14deg) rotateZ(-14.40deg); }
+#xy1 { -webkit-transform: translate3d(497.89px, -407.11107681614754px, 0px); }
+#xy2 { -webkit-transform: translate3d(511.89px, -229.16161156137696px, 0px); }
+#xy3 { -webkit-transform: translate3d(-313.33px, -492.45777453306493px, 0px); }
+#xy4 { -webkit-transform: translate3d(-279.74px, -312.1760242984629px, 0px); }
+#xy5 { -webkit-transform: translate3d(95.54px, -596.0025567191266px, 0px); }
+#xy6 { -webkit-transform: translate3d(-69.70px, -562.3727055986894px, 0px); }
+#xy7 { -webkit-transform: translate3d(-317.53px, 130.60744945932095px, 0px); }
+#xy8 { -webkit-transform: translate3d(-380.99px, 65.05447121218333px, 0px); }
+#xy9 { -webkit-transform: translate3d(511.75px, 0.42114114166292893px, 0px); }
+#xy10 { -webkit-transform: translate3d(-586.65px, 16.113050681213736px, 0px); }
+#xy11 { -webkit-transform: translate3d(-232.32px, -486.5849005593741px, 0px); }
+#xy12 { -webkit-transform: translate3d(496.79px, 307.1356805239096px, 0px); }
+#xy13 { -webkit-transform: translate3d(387.57px, 86.68595234543466px, 0px); }
+#xy14 { -webkit-transform: translate3d(98.55px, 176.7623258373436px, 0px); }
+#xy15 { -webkit-transform: translate3d(-360.25px, 565.538196170005px, 0px); }
+#xy16 { -webkit-transform: translate3d(211.59px, -96.44651569166399px, 0px); }
+#xy17 { -webkit-transform: translate3d(451.45px, -444.62359420904113px, 0px); }
+#xy18 { -webkit-transform: translate3d(451.84px, 321.97954841697515px, 0px); }
+#xy19 { -webkit-transform: translate3d(65.39px, 196.42076786325208px, 0px); }
+#xy20 { -webkit-transform: translate3d(527.95px, 217.4875466139747px, 0px); }
+#xy21 { -webkit-transform: translate3d(177.47px, 17.81709144444801px, 0px); }
+#xy22 { -webkit-transform: translate3d(428.79px, 391.8287479877522px, 0px); }
+#xy23 { -webkit-transform: translate3d(580.09px, -198.6936852145477px, 0px); }
+#xy24 { -webkit-transform: translate3d(25.87px, -458.3498367818124px, 0px); }
+#xy25 { -webkit-transform: translate3d(-351.79px, -554.5743748461601px, 0px); }
+#xy26 { -webkit-transform: translate3d(-505.28px, 453.88621960136766px, 0px); }
+#xy27 { -webkit-transform: translate3d(-620.80px, 312.78263485681464px, 0px); }
+#xy28 { -webkit-transform: translate3d(-169.64px, -429.0497360074198px, 0px); }
+#xy29 { -webkit-transform: translate3d(-478.16px, -384.15487173493557px, 0px); }
+#xy30 { -webkit-transform: translate3d(602.58px, 318.9003125145234px, 0px); }
+#xy31 { -webkit-transform: translate3d(668.37px, -111.84511340594077px, 0px); }
+#xy32 { -webkit-transform: translate3d(-113.76px, -51.29590974830626px, 0px); }
+#xy33 { -webkit-transform: translate3d(-64.31px, 639.112891935866px, 0px); }
+#xy34 { -webkit-transform: translate3d(182.24px, -542.2827696742296px, 0px); }
+#xy35 { -webkit-transform: translate3d(-169.97px, -143.88077443421923px, 0px); }
+#xy36 { -webkit-transform: translate3d(239.85px, 236.6931829783465px, 0px); }
+#xy37 { -webkit-transform: translate3d(-331.09px, -202.16502392863993px, 0px); }
+#xy38 { -webkit-transform: translate3d(-542.89px, 152.96854858406198px, 0px); }
+#xy39 { -webkit-transform: translate3d(-104.14px, -30.341395411758185px, 0px); }
+#xy40 { -webkit-transform: translate3d(-331.34px, 550.7661976630645px, 0px); }
+#xy41 { -webkit-transform: translate3d(-538.39px, 434.78963232982255px, 0px); }
+#xy42 { -webkit-transform: translate3d(499.74px, 200.8055844190269px, 0px); }
+#xy43 { -webkit-transform: translate3d(403.85px, 315.0437824626731px, 0px); }
+#xy44 { -webkit-transform: translate3d(-537.34px, 366.49201097820946px, 0px); }
+#xy45 { -webkit-transform: translate3d(379.01px, 104.91010764016346px, 0px); }
+#xy46 { -webkit-transform: translate3d(5.97px, 391.84112731732034px, 0px); }
+#xy47 { -webkit-transform: translate3d(-542.83px, -112.88128953808678px, 0px); }
+#xy48 { -webkit-transform: translate3d(-463.88px, 212.09352415213903px, 0px); }
+#xy49 { -webkit-transform: translate3d(-570.39px, 31.67359623122843px, 0px); }
+#xy50 { -webkit-transform: translate3d(275.81px, -495.4332013889365px, 0px); }
+.r1 { -webkit-animation: spread 5.01s ease-out 1.94s infinite; }
+.r2 { -webkit-animation: spread 4.89s ease-out 4.40s infinite; }
+.r3 { -webkit-animation: spread 4.90s ease-out 0.62s infinite; }
+.r4 { -webkit-animation: spread 5.70s ease-out 3.43s infinite; }
+.r5 { -webkit-animation: spread 3.87s ease-out 2.66s infinite; }
+.r6 { -webkit-animation: spread 5.44s ease-out 0.88s infinite; }
+.r7 { -webkit-animation: spread 5.37s ease-out 3.26s infinite; }
+.r8 { -webkit-animation: spread 4.50s ease-out 3.41s infinite; }
+.r9 { -webkit-animation: spread 3.39s ease-out 3.14s infinite; }
+.r10 { -webkit-animation: spread 5.05s ease-out 3.54s infinite; }
+.r11 { -webkit-animation: spread 4.41s ease-out 0.61s infinite; }
+.r12 { -webkit-animation: spread 4.44s ease-out 0.86s infinite; }
+.r13 { -webkit-animation: spread 4.55s ease-out 2.00s infinite; }
+.r14 { -webkit-animation: spread 3.67s ease-out 4.34s infinite; }
+.r15 { -webkit-animation: spread 3.81s ease-out 0.95s infinite; }
+.r16 { -webkit-animation: spread 5.91s ease-out 3.86s infinite; }
+.r17 { -webkit-animation: spread 5.92s ease-out 0.45s infinite; }
+.r18 { -webkit-animation: spread 4.81s ease-out 1.36s infinite; }
+.r19 { -webkit-animation: spread 4.48s ease-out 4.02s infinite; }
+.r20 { -webkit-animation: spread 3.40s ease-out 0.11s infinite; }
+.r21 { -webkit-animation: spread 5.15s ease-out 1.20s infinite; }
+.r22 { -webkit-animation: spread 5.78s ease-out 0.57s infinite; }
+.r23 { -webkit-animation: spread 3.46s ease-out 4.92s infinite; }
+.r24 { -webkit-animation: spread 4.23s ease-out 1.13s infinite; }
+.r25 { -webkit-animation: spread 5.02s ease-out 3.03s infinite; }
+.r26 { -webkit-animation: spread 5.51s ease-out 1.42s infinite; }
+.r27 { -webkit-animation: spread 4.76s ease-out 0.54s infinite; }
+.r28 { -webkit-animation: spread 3.51s ease-out 0.47s infinite; }
+.r29 { -webkit-animation: spread 3.46s ease-out 2.78s infinite; }
+.r30 { -webkit-animation: spread 4.40s ease-out 2.18s infinite; }
+.r31 { -webkit-animation: spread 5.03s ease-out 0.66s infinite; }
+.r32 { -webkit-animation: spread 5.00s ease-out 3.82s infinite; }
+.r33 { -webkit-animation: spread 5.85s ease-out 1.93s infinite; }
+.r34 { -webkit-animation: spread 4.75s ease-out 2.33s infinite; }
+.r35 { -webkit-animation: spread 5.85s ease-out 3.83s infinite; }
+.r36 { -webkit-animation: spread 4.98s ease-out 0.08s infinite; }
+.r37 { -webkit-animation: spread 5.57s ease-out 0.61s infinite; }
+.r38 { -webkit-animation: spread 4.58s ease-out 4.64s infinite; }
+.r39 { -webkit-animation: spread 4.56s ease-out 2.95s infinite; }
+.r40 { -webkit-animation: spread 6.00s ease-out 0.44s infinite; }
+.r41 { -webkit-animation: spread 4.42s ease-out 3.13s infinite; }
+.r42 { -webkit-animation: spread 4.99s ease-out 4.88s infinite; }
+.r43 { -webkit-animation: spread 5.77s ease-out 3.18s infinite; }
+.r44 { -webkit-animation: spread 5.07s ease-out 2.17s infinite; }
+.r45 { -webkit-animation: spread 3.31s ease-out 1.92s infinite; }
+.r46 { -webkit-animation: spread 4.74s ease-out 2.11s infinite; }
+.r47 { -webkit-animation: spread 4.92s ease-out 1.16s infinite; }
+.r48 { -webkit-animation: spread 4.73s ease-out 3.69s infinite; }
+.r49 { -webkit-animation: spread 3.60s ease-out 1.39s infinite; }
+.r50 { -webkit-animation: spread 5.60s ease-out 0.04s infinite; }
+

@@ -1,0 +1,72 @@
+body {
+  overflow: hidden;
+  background-image: -webkit-gradient(
+      radial,
+      center center, 0,
+      center center, 5,
+      from(          rgba(160, 160, 255, 1)),
+      color-stop(.99,rgba(160, 160, 255, 1)),
+      to(            rgba(220, 220, 240, 1)));
+  -webkit-background-size: 32px 32px;
+}
+
+
+* {
+    padding: 0px;
+    margin: 0px;
+    position: absolute;
+}
+
+video {
+    visibility: hidden;
+}
+
+canvas {
+    left: 30px;
+    top: 20px;
+    background: #ccf;
+    width: 410px;
+    height: 400px;
+    padding: 0px;
+    margin: 0px;
+    box-shadow: 4px 4px 4px 4px #666;
+}
+
+#message_input {
+    left: 30px;
+    top: 435px;
+    width: 410px;
+    background: -webkit-gradient(linear, left top, left bottom, from(#ddd), to(#fff));
+    text-shadow: 0 1px #ccf;
+    border-radius: 3px;
+}
+
+#aa_output {
+    padding: 4px;
+    left: 34px;
+    top: 24px;
+    background: #000;
+    opacity: 0.5;
+    z-index: 10;
+    border-radius: 4px;
+    color: #fff;
+    text-shadow: 1px 1px 30px #000;
+    visibility: hidden;
+    font-family: monospace;
+    font-size: 14px;
+}
+
+#message_output {
+    padding: 4px;
+    left: 30px;
+    top: 345px;
+    width: 395px;
+    height: 60px;
+    background: #000;
+    opacity: 0.7;
+    z-index: 10;
+    border: 4px dotted #fff;
+    border-radius: 4px;
+    color: #fff;
+    text-shadow: 0px 0px 2px #ccc;
+}

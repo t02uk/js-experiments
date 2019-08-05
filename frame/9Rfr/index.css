@@ -1,0 +1,104 @@
+/* #! scss */
+li {
+  list-style-type: none; }
+
+li:after {
+  border-radius: 200px;
+  width: 40px;
+  height: 40px; }
+
+li:nth-child(1):after {
+  background-color: red;
+  content: '';
+  position: absolute;
+  left: 78.34523px;
+  top: 208.72396px;
+  color: #00cccc; }
+
+li:nth-child(2):after {
+  background-color: #ff8000;
+  content: '';
+  position: absolute;
+  left: 107.7838px;
+  top: 152.25569px;
+  color: #0066cc; }
+
+li:nth-child(3):after {
+  background-color: yellow;
+  content: '';
+  position: absolute;
+  left: 148.53252px;
+  top: 113.94061px;
+  color: #0000cc; }
+
+li:nth-child(4):after {
+  background-color: #80ff00;
+  content: '';
+  position: absolute;
+  left: 199.41325px;
+  top: 100.01736px;
+  color: #6600cc; }
+
+li:nth-child(5):after {
+  background-color: lime;
+  content: '';
+  position: absolute;
+  left: 249.71028px;
+  top: 113.23334px;
+  color: #cc00cc; }
+
+li:nth-child(6):after {
+  background-color: #00ff80;
+  content: '';
+  position: absolute;
+  left: 286.5199px;
+  top: 149.85716px;
+  color: #cc0066; }
+
+li:nth-child(7):after {
+  background-color: cyan;
+  content: '';
+  position: absolute;
+  left: 300px;
+  top: 200px;
+  color: #cc0000; }
+
+li:nth-child(8):after {
+  background-color: #007fff;
+  content: '';
+  position: absolute;
+  left: 286.5199px;
+  top: 250.14284px;
+  color: #cc6600; }
+
+li:nth-child(9):after {
+  background-color: blue;
+  content: '';
+  position: absolute;
+  left: 249.71028px;
+  top: 286.76666px;
+  color: #cccc00; }
+
+li:nth-child(10):after {
+  background-color: #7f00ff;
+  content: '';
+  position: absolute;
+  left: 199.41325px;
+  top: 299.98264px;
+  color: #66cc00; }
+
+li:nth-child(11):after {
+  background-color: magenta;
+  content: '';
+  position: absolute;
+  left: 148.53252px;
+  top: 286.05939px;
+  color: #00cc00; }
+
+li:nth-child(12):after {
+  background-color: #ff0080;
+  content: '';
+  position: absolute;
+  left: 107.7838px;
+  top: 247.74431px;
+  color: #00cc66; }

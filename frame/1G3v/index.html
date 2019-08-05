@@ -1,0 +1,326 @@
+<div id="camera">
+    <div id="view">
+
+<!--
+  下記を繰り返す
+    [花びら]
+    xy(n) XY位置の座標をセット
+      →za(n) 落ちる動作。Z座標の座標アニメーション。回転処理を担当。
+        →ru(n) 花びら固有の回転角度をセット
+          →petal 花びらを描画する
+    [影]
+    z0 Z座標上、0倍に伸縮して、ぺたんこに。
+      xy(n) XY位置の座標をセット
+        →za(n) 落ちる動作。Z座標の座標アニメーション。回転処理を担当。
+          →ru(n) 花びら固有の回転角度をセット
+            →shadow 影を描画する
+    [波紋]
+      xy(n) XY位置の座標をセット
+        →r(n) ハモンが広がる。花びらが落ちるタイミング同じ時期に発動。
+          →ripple 波紋を描画する
+
+-->
+        <div id="xy1"><div class="za1"><div class="ru1"><div class="petal"></div></div></div></div>
+        <div class="z0">
+            <div id="xy1"><div class="za1"><div class="ru1"><div class="shadow"></div></div></div></div>
+        </div>
+        <div id="xy1"><div class="r1"><div class="ripple"></div></div></div>
+
+        <div id="xy2"><div class="za2"><div class="ru2"><div class="petal"></div></div></div></div>
+        <div class="z0">
+            <div id="xy2"><div class="za2"><div class="ru2"><div class="shadow"></div></div></div></div>
+        </div>
+        <div id="xy2"><div class="r2"><div class="ripple"></div></div></div>
+
+        <div id="xy3"><div class="za3"><div class="ru3"><div class="petal"></div></div></div></div>
+        <div class="z0">
+            <div id="xy3"><div class="za3"><div class="ru3"><div class="shadow"></div></div></div></div>
+        </div>
+        <div id="xy3"><div class="r3"><div class="ripple"></div></div></div>
+
+        <div id="xy4"><div class="za4"><div class="ru4"><div class="petal"></div></div></div></div>
+        <div class="z0">
+            <div id="xy4"><div class="za4"><div class="ru4"><div class="shadow"></div></div></div></div>
+        </div>
+        <div id="xy4"><div class="r4"><div class="ripple"></div></div></div>
+
+        <div id="xy5"><div class="za5"><div class="ru5"><div class="petal"></div></div></div></div>
+        <div class="z0">
+            <div id="xy5"><div class="za5"><div class="ru5"><div class="shadow"></div></div></div></div>
+        </div>
+        <div id="xy5"><div class="r5"><div class="ripple"></div></div></div>
+
+        <div id="xy6"><div class="za6"><div class="ru6"><div class="petal"></div></div></div></div>
+        <div class="z0">
+            <div id="xy6"><div class="za6"><div class="ru6"><div class="shadow"></div></div></div></div>
+        </div>
+        <div id="xy6"><div class="r6"><div class="ripple"></div></div></div>
+
+        <div id="xy7"><div class="za7"><div class="ru7"><div class="petal"></div></div></div></div>
+        <div class="z0">
+            <div id="xy7"><div class="za7"><div class="ru7"><div class="shadow"></div></div></div></div>
+        </div>
+        <div id="xy7"><div class="r7"><div class="ripple"></div></div></div>
+
+        <div id="xy8"><div class="za8"><div class="ru8"><div class="petal"></div></div></div></div>
+        <div class="z0">
+            <div id="xy8"><div class="za8"><div class="ru8"><div class="shadow"></div></div></div></div>
+        </div>
+        <div id="xy8"><div class="r8"><div class="ripple"></div></div></div>
+
+        <div id="xy9"><div class="za9"><div class="ru9"><div class="petal"></div></div></div></div>
+        <div class="z0">
+            <div id="xy9"><div class="za9"><div class="ru9"><div class="shadow"></div></div></div></div>
+        </div>
+        <div id="xy9"><div class="r9"><div class="ripple"></div></div></div>
+
+        <div id="xy10"><div class="za10"><div class="ru10"><div class="petal"></div></div></div></div>
+        <div class="z0">
+            <div id="xy10"><div class="za10"><div class="ru10"><div class="shadow"></div></div></div></div>
+        </div>
+        <div id="xy10"><div class="r10"><div class="ripple"></div></div></div>
+
+        <div id="xy11"><div class="za11"><div class="ru11"><div class="petal"></div></div></div></div>
+        <div class="z0">
+            <div id="xy11"><div class="za11"><div class="ru11"><div class="shadow"></div></div></div></div>
+        </div>
+        <div id="xy11"><div class="r11"><div class="ripple"></div></div></div>
+
+        <div id="xy12"><div class="za12"><div class="ru12"><div class="petal"></div></div></div></div>
+        <div class="z0">
+            <div id="xy12"><div class="za12"><div class="ru12"><div class="shadow"></div></div></div></div>
+        </div>
+        <div id="xy12"><div class="r12"><div class="ripple"></div></div></div>
+
+        <div id="xy13"><div class="za13"><div class="ru13"><div class="petal"></div></div></div></div>
+        <div class="z0">
+            <div id="xy13"><div class="za13"><div class="ru13"><div class="shadow"></div></div></div></div>
+        </div>
+        <div id="xy13"><div class="r13"><div class="ripple"></div></div></div>
+
+        <div id="xy14"><div class="za14"><div class="ru14"><div class="petal"></div></div></div></div>
+        <div class="z0">
+            <div id="xy14"><div class="za14"><div class="ru14"><div class="shadow"></div></div></div></div>
+        </div>
+        <div id="xy14"><div class="r14"><div class="ripple"></div></div></div>
+
+        <div id="xy15"><div class="za15"><div class="ru15"><div class="petal"></div></div></div></div>
+        <div class="z0">
+            <div id="xy15"><div class="za15"><div class="ru15"><div class="shadow"></div></div></div></div>
+        </div>
+        <div id="xy15"><div class="r15"><div class="ripple"></div></div></div>
+
+        <div id="xy16"><div class="za16"><div class="ru16"><div class="petal"></div></div></div></div>
+        <div class="z0">
+            <div id="xy16"><div class="za16"><div class="ru16"><div class="shadow"></div></div></div></div>
+        </div>
+        <div id="xy16"><div class="r16"><div class="ripple"></div></div></div>
+
+        <div id="xy17"><div class="za17"><div class="ru17"><div class="petal"></div></div></div></div>
+        <div class="z0">
+            <div id="xy17"><div class="za17"><div class="ru17"><div class="shadow"></div></div></div></div>
+        </div>
+        <div id="xy17"><div class="r17"><div class="ripple"></div></div></div>
+
+        <div id="xy18"><div class="za18"><div class="ru18"><div class="petal"></div></div></div></div>
+        <div class="z0">
+            <div id="xy18"><div class="za18"><div class="ru18"><div class="shadow"></div></div></div></div>
+        </div>
+        <div id="xy18"><div class="r18"><div class="ripple"></div></div></div>
+
+        <div id="xy19"><div class="za19"><div class="ru19"><div class="petal"></div></div></div></div>
+        <div class="z0">
+            <div id="xy19"><div class="za19"><div class="ru19"><div class="shadow"></div></div></div></div>
+        </div>
+        <div id="xy19"><div class="r19"><div class="ripple"></div></div></div>
+
+        <div id="xy20"><div class="za20"><div class="ru20"><div class="petal"></div></div></div></div>
+        <div class="z0">
+            <div id="xy20"><div class="za20"><div class="ru20"><div class="shadow"></div></div></div></div>
+        </div>
+        <div id="xy20"><div class="r20"><div class="ripple"></div></div></div>
+
+        <div id="xy21"><div class="za21"><div class="ru21"><div class="petal"></div></div></div></div>
+        <div class="z0">
+            <div id="xy21"><div class="za21"><div class="ru21"><div class="shadow"></div></div></div></div>
+        </div>
+        <div id="xy21"><div class="r21"><div class="ripple"></div></div></div>
+
+        <div id="xy22"><div class="za22"><div class="ru22"><div class="petal"></div></div></div></div>
+        <div class="z0">
+            <div id="xy22"><div class="za22"><div class="ru22"><div class="shadow"></div></div></div></div>
+        </div>
+        <div id="xy22"><div class="r22"><div class="ripple"></div></div></div>
+
+        <div id="xy23"><div class="za23"><div class="ru23"><div class="petal"></div></div></div></div>
+        <div class="z0">
+            <div id="xy23"><div class="za23"><div class="ru23"><div class="shadow"></div></div></div></div>
+        </div>
+        <div id="xy23"><div class="r23"><div class="ripple"></div></div></div>
+
+        <div id="xy24"><div class="za24"><div class="ru24"><div class="petal"></div></div></div></div>
+        <div class="z0">
+            <div id="xy24"><div class="za24"><div class="ru24"><div class="shadow"></div></div></div></div>
+        </div>
+        <div id="xy24"><div class="r24"><div class="ripple"></div></div></div>
+
+        <div id="xy25"><div class="za25"><div class="ru25"><div class="petal"></div></div></div></div>
+        <div class="z0">
+            <div id="xy25"><div class="za25"><div class="ru25"><div class="shadow"></div></div></div></div>
+        </div>
+        <div id="xy25"><div class="r25"><div class="ripple"></div></div></div>
+
+        <div id="xy26"><div class="za26"><div class="ru26"><div class="petal"></div></div></div></div>
+        <div class="z0">
+            <div id="xy26"><div class="za26"><div class="ru26"><div class="shadow"></div></div></div></div>
+        </div>
+        <div id="xy26"><div class="r26"><div class="ripple"></div></div></div>
+
+        <div id="xy27"><div class="za27"><div class="ru27"><div class="petal"></div></div></div></div>
+        <div class="z0">
+            <div id="xy27"><div class="za27"><div class="ru27"><div class="shadow"></div></div></div></div>
+        </div>
+        <div id="xy27"><div class="r27"><div class="ripple"></div></div></div>
+
+        <div id="xy28"><div class="za28"><div class="ru28"><div class="petal"></div></div></div></div>
+        <div class="z0">
+            <div id="xy28"><div class="za28"><div class="ru28"><div class="shadow"></div></div></div></div>
+        </div>
+        <div id="xy28"><div class="r28"><div class="ripple"></div></div></div>
+
+        <div id="xy29"><div class="za29"><div class="ru29"><div class="petal"></div></div></div></div>
+        <div class="z0">
+            <div id="xy29"><div class="za29"><div class="ru29"><div class="shadow"></div></div></div></div>
+        </div>
+        <div id="xy29"><div class="r29"><div class="ripple"></div></div></div>
+
+        <div id="xy30"><div class="za30"><div class="ru30"><div class="petal"></div></div></div></div>
+        <div class="z0">
+            <div id="xy30"><div class="za30"><div class="ru30"><div class="shadow"></div></div></div></div>
+        </div>
+        <div id="xy30"><div class="r30"><div class="ripple"></div></div></div>
+<!--
+        <div id="xy31"><div class="za31"><div class="ru31"><div class="petal"></div></div></div></div>
+        <div class="z0">
+            <div id="xy31"><div class="za31"><div class="ru31"><div class="shadow"></div></div></div></div>
+        </div>
+        <div id="xy31"><div class="r31"><div class="ripple"></div></div></div>
+
+        <div id="xy32"><div class="za32"><div class="ru32"><div class="petal"></div></div></div></div>
+        <div class="z0">
+            <div id="xy32"><div class="za32"><div class="ru32"><div class="shadow"></div></div></div></div>
+        </div>
+        <div id="xy32"><div class="r32"><div class="ripple"></div></div></div>
+
+        <div id="xy33"><div class="za33"><div class="ru33"><div class="petal"></div></div></div></div>
+        <div class="z0">
+            <div id="xy33"><div class="za33"><div class="ru33"><div class="shadow"></div></div></div></div>
+        </div>
+        <div id="xy33"><div class="r33"><div class="ripple"></div></div></div>
+
+        <div id="xy34"><div class="za34"><div class="ru34"><div class="petal"></div></div></div></div>
+        <div class="z0">
+            <div id="xy34"><div class="za34"><div class="ru34"><div class="shadow"></div></div></div></div>
+        </div>
+        <div id="xy34"><div class="r34"><div class="ripple"></div></div></div>
+
+        <div id="xy35"><div class="za35"><div class="ru35"><div class="petal"></div></div></div></div>
+        <div class="z0">
+            <div id="xy35"><div class="za35"><div class="ru35"><div class="shadow"></div></div></div></div>
+        </div>
+        <div id="xy35"><div class="r35"><div class="ripple"></div></div></div>
+
+        <div id="xy36"><div class="za36"><div class="ru36"><div class="petal"></div></div></div></div>
+        <div class="z0">
+            <div id="xy36"><div class="za36"><div class="ru36"><div class="shadow"></div></div></div></div>
+        </div>
+        <div id="xy36"><div class="r36"><div class="ripple"></div></div></div>
+
+        <div id="xy37"><div class="za37"><div class="ru37"><div class="petal"></div></div></div></div>
+        <div class="z0">
+            <div id="xy37"><div class="za37"><div class="ru37"><div class="shadow"></div></div></div></div>
+        </div>
+        <div id="xy37"><div class="r37"><div class="ripple"></div></div></div>
+
+        <div id="xy38"><div class="za38"><div class="ru38"><div class="petal"></div></div></div></div>
+        <div class="z0">
+            <div id="xy38"><div class="za38"><div class="ru38"><div class="shadow"></div></div></div></div>
+        </div>
+        <div id="xy38"><div class="r38"><div class="ripple"></div></div></div>
+
+        <div id="xy39"><div class="za39"><div class="ru39"><div class="petal"></div></div></div></div>
+        <div class="z0">
+            <div id="xy39"><div class="za39"><div class="ru39"><div class="shadow"></div></div></div></div>
+        </div>
+        <div id="xy39"><div class="r39"><div class="ripple"></div></div></div>
+
+        <div id="xy40"><div class="za40"><div class="ru40"><div class="petal"></div></div></div></div>
+        <div class="z0">
+            <div id="xy40"><div class="za40"><div class="ru40"><div class="shadow"></div></div></div></div>
+        </div>
+        <div id="xy40"><div class="r40"><div class="ripple"></div></div></div>
+
+        <div id="xy41"><div class="za41"><div class="ru41"><div class="petal"></div></div></div></div>
+        <div class="z0">
+            <div id="xy41"><div class="za41"><div class="ru41"><div class="shadow"></div></div></div></div>
+        </div>
+        <div id="xy41"><div class="r41"><div class="ripple"></div></div></div>
+
+        <div id="xy42"><div class="za42"><div class="ru42"><div class="petal"></div></div></div></div>
+        <div class="z0">
+            <div id="xy42"><div class="za42"><div class="ru42"><div class="shadow"></div></div></div></div>
+        </div>
+        <div id="xy42"><div class="r42"><div class="ripple"></div></div></div>
+
+        <div id="xy43"><div class="za43"><div class="ru43"><div class="petal"></div></div></div></div>
+        <div class="z0">
+            <div id="xy43"><div class="za43"><div class="ru43"><div class="shadow"></div></div></div></div>
+        </div>
+        <div id="xy43"><div class="r43"><div class="ripple"></div></div></div>
+
+        <div id="xy44"><div class="za44"><div class="ru44"><div class="petal"></div></div></div></div>
+        <div class="z0">
+            <div id="xy44"><div class="za44"><div class="ru44"><div class="shadow"></div></div></div></div>
+        </div>
+        <div id="xy44"><div class="r44"><div class="ripple"></div></div></div>
+
+        <div id="xy45"><div class="za45"><div class="ru45"><div class="petal"></div></div></div></div>
+        <div class="z0">
+            <div id="xy45"><div class="za45"><div class="ru45"><div class="shadow"></div></div></div></div>
+        </div>
+        <div id="xy45"><div class="r45"><div class="ripple"></div></div></div>
+
+        <div id="xy46"><div class="za46"><div class="ru46"><div class="petal"></div></div></div></div>
+        <div class="z0">
+            <div id="xy46"><div class="za46"><div class="ru46"><div class="shadow"></div></div></div></div>
+        </div>
+        <div id="xy46"><div class="r46"><div class="ripple"></div></div></div>
+
+        <div id="xy47"><div class="za47"><div class="ru47"><div class="petal"></div></div></div></div>
+        <div class="z0">
+            <div id="xy47"><div class="za47"><div class="ru47"><div class="shadow"></div></div></div></div>
+        </div>
+        <div id="xy47"><div class="r47"><div class="ripple"></div></div></div>
+
+        <div id="xy48"><div class="za48"><div class="ru48"><div class="petal"></div></div></div></div>
+        <div class="z0">
+            <div id="xy48"><div class="za48"><div class="ru48"><div class="shadow"></div></div></div></div>
+        </div>
+        <div id="xy48"><div class="r48"><div class="ripple"></div></div></div>
+
+        <div id="xy49"><div class="za49"><div class="ru49"><div class="petal"></div></div></div></div>
+        <div class="z0">
+            <div id="xy49"><div class="za49"><div class="ru49"><div class="shadow"></div></div></div></div>
+        </div>
+        <div id="xy49"><div class="r49"><div class="ripple"></div></div></div>
+
+        <div id="xy50"><div class="za50"><div class="ru50"><div class="petal"></div></div></div></div>
+        <div class="z0">
+            <div id="xy50"><div class="za50"><div class="ru50"><div class="shadow"></div></div></div></div>
+        </div>
+        <div id="xy50"><div class="r50"><div class="ripple"></div></div></div>
+
+-->
+    </div>
+</div>
+

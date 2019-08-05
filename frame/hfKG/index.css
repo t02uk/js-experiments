@@ -1,0 +1,178 @@
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  width: 400px;
+}
+
+table td {
+  width: 50px;
+  
+  transition: 0.5s ease-in-out; /* CSS草案 */
+  -webkit-transition: 0.5s ease-in-out; /* Safari, Chrome */
+  -moz-transition: 0.5s ease-in-out; /* Firefox */
+}
+table td:hover {
+  width: 100px;
+}
+table td a {
+  display: block;
+  text-align: center;
+  height: 50px;
+  text-indent: -99999px;
+  
+  transition: 0.5s ease-in-out; /* CSS草案 */
+  -webkit-transition: 0.5s ease-in-out; /* Safari, Chrome */
+  -moz-transition: 0.5s ease-in-out; /* Firefox */
+  border-radius: 5px;
+}
+
+table tr {
+  transition: 0.5s ease-in-out; /* CSS草案 */
+  -webkit-transition: 0.5s ease-in-out; /* Safari, Chrome */
+  -moz-transition: 0.5s ease-in-out; /* Firefox */
+}
+table tr:hover a {
+  height: 100px;
+}
+
+table td a:link,
+table td a:visited {
+  color: #333;
+  text-decoration: none;
+}
+table td a:hover,
+table td a:active {
+  color: #333;
+  text-decoration: none;
+}
+
+
+.btn00 {
+  background-image:url("http://dl.dropbox.com/u/3589634/resource/image/kan.jpg");
+  background-size: 625% 625%;
+  background-position: 0% 0%;
+}
+.btn01 {
+  background-image:url("http://dl.dropbox.com/u/3589634/resource/image/kan.jpg");
+  background-size: 625% 625%;
+  background-position: 20% 0%;
+}
+.btn02 {
+  background-image:url("http://dl.dropbox.com/u/3589634/resource/image/kan.jpg");
+  background-size: 625% 625%;
+  background-position: 40% 0%;
+}
+.btn03 {
+  background-image:url("http://dl.dropbox.com/u/3589634/resource/image/kan.jpg");
+  background-size: 625% 625%;
+  background-position: 60% 0%;
+}
+.btn04 {
+  background-image:url("http://dl.dropbox.com/u/3589634/resource/image/kan.jpg");
+  background-size: 625% 625%;
+  background-position: 80% 0%;
+}
+
+.btn10 {
+  background-image:url("http://dl.dropbox.com/u/3589634/resource/image/kan.jpg");
+  background-size: 625% 625%;
+  background-position: 0% 20%;
+}
+.btn11 {
+  background-image:url("http://dl.dropbox.com/u/3589634/resource/image/kan.jpg");
+  background-size: 625% 625%;
+  background-position: 20% 20%;
+}
+.btn12 {
+  background-image:url("http://dl.dropbox.com/u/3589634/resource/image/kan.jpg");
+  background-size: 625% 625%;
+  background-position: 40% 20%;
+}
+.btn13 {
+  background-image:url("http://dl.dropbox.com/u/3589634/resource/image/kan.jpg");
+  background-size: 625% 625%;
+  background-position: 60% 20%;
+}
+.btn14 {
+  background-image:url("http://dl.dropbox.com/u/3589634/resource/image/kan.jpg");
+  background-size: 625% 625%;
+  background-position: 80% 20%;
+}
+
+.btn20 {
+  background-image:url("http://dl.dropbox.com/u/3589634/resource/image/kan.jpg");
+  background-size: 625% 625%;
+  background-position: 0% 40%;
+}
+.btn21 {
+  background-image:url("http://dl.dropbox.com/u/3589634/resource/image/kan.jpg");
+  background-size: 625% 625%;
+  background-position: 20% 40%;
+}
+.btn22 {
+  background-image:url("http://dl.dropbox.com/u/3589634/resource/image/kan.jpg");
+  background-size: 625% 625%;
+  background-position: 40% 40%;
+}
+.btn23 {
+  background-image:url("http://dl.dropbox.com/u/3589634/resource/image/kan.jpg");
+  background-size: 625% 625%;
+  background-position: 60% 40%;
+}
+.btn24 {
+  background-image:url("http://dl.dropbox.com/u/3589634/resource/image/kan.jpg");
+  background-size: 625% 625%;
+  background-position: 80% 40%;
+}
+
+.btn30 {
+  background-image:url("http://dl.dropbox.com/u/3589634/resource/image/kan.jpg");
+  background-size: 625% 625%;
+  background-position: 0% 60%;
+}
+.btn31 {
+  background-image:url("http://dl.dropbox.com/u/3589634/resource/image/kan.jpg");
+  background-size: 625% 625%;
+  background-position: 20% 60%;
+}
+.btn32 {
+  background-image:url("http://dl.dropbox.com/u/3589634/resource/image/kan.jpg");
+  background-size: 625% 625%;
+  background-position: 40% 60%;
+}
+.btn33 {
+  background-image:url("http://dl.dropbox.com/u/3589634/resource/image/kan.jpg");
+  background-size: 625% 625%;
+  background-position: 60% 60%;
+}
+.btn34 {
+  background-image:url("http://dl.dropbox.com/u/3589634/resource/image/kan.jpg");
+  background-size: 625% 625%;
+  background-position: 80% 60%;
+}
+
+.btn40 {
+  background-image:url("http://dl.dropbox.com/u/3589634/resource/image/kan.jpg");
+  background-size: 625% 625%;
+  background-position: 0% 80%;
+}
+.btn41 {
+  background-image:url("http://dl.dropbox.com/u/3589634/resource/image/kan.jpg");
+  background-size: 625% 625%;
+  background-position: 20% 80%;
+}
+.btn42 {
+  background-image:url("http://dl.dropbox.com/u/3589634/resource/image/kan.jpg");
+  background-size: 625% 625%;
+  background-position: 40% 80%;
+}
+.btn43 {
+  background-image:url("http://dl.dropbox.com/u/3589634/resource/image/kan.jpg");
+  background-size: 625% 625%;
+  background-position: 60% 80%;
+}
+.btn44 {
+  background-image:url("http://dl.dropbox.com/u/3589634/resource/image/kan.jpg");
+  background-size: 625% 625%;
+  background-position: 80% 80%;
+}

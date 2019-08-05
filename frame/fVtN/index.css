@@ -1,0 +1,65 @@
+/* 全焼セレクタ */
+* {
+  margin: 0px;
+  padding: 0px;
+}
+
+body {
+  background-color: #fff;
+  overflow: hidden;
+}
+
+/* div要素は無条件で3Dにする */
+div {
+  -webkit-transform-style: preserve-3d;
+}
+
+
+/* カメラ */
+#camera {
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  -webkit-perspective: 1000;
+  -webkit-perspective-origin: 0% 0% 0%;
+}
+
+
+/* 視界、変換座標の適用 */
+#view {
+  -webkit-animation: camerawork 10s linear 0s infinite;
+}
+
+/* 回転 */
+@-webkit-keyframes roll {
+    0% {
+        -webkit-transform: rotateX(90deg) rotateY(45deg) rotateZ(45deg) scale3d(0.8, 0.8, 0.8);
+    }
+    100% {
+        -webkit-transform: rotateX(450deg) rotateY(450deg) rotateZ(520deg) scale3d(0.8, 0.8, 0.8);
+    }
+}
+
+.ring {
+  -moz-border-radius: 400px;
+  border-radius: 400px;
+  border: 4px dashed #648;
+  position: absolute;
+  display: inline-block;
+  left: -6px;
+  top: -6px;
+  width: 420px;
+  height: 420px;
+  opacity: 0.7;
+  -webkit-animation: roll 10s linear 0s infinite alternate;
+}
+
+.ring>.ring {
+  border-color: #366;
+}
+.ring>.ring>.ring {
+  border-color: #960;
+}
+.ring>.ring>.ring>.ring {
+  border-color: #903;
+}

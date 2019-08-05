@@ -1,0 +1,76 @@
+.polygon {
+  position: absolute;
+  -webkit-transform-origin: 0 0 0;
+}
+
+* {
+    margin:0px; padding: 0px;
+}
+body {
+  width: 465px;
+  height: 465px;
+  background-color: #ffe;
+}
+
+/* div要素は無条件で3Dにする */
+div, img {
+  -webkit-transform-style: preserve-3d;
+  position: absolute;
+}
+
+/* 視界 視界位置を画面中央に持っていくこと、3Dの設定を担当 */
+#camera {
+  position: absolute;
+  left: 230px;
+  top: 230px;
+  -webkit-perspective: 500;
+  -webkit-perspective-origin: 0% 0%;
+}
+
+@-webkit-keyframes camerawork {
+    0% {
+        -webkit-transform: translate3d(-150px, 200px, 0px) rotateX(10deg) rotateY(0deg) rotateZ(0deg);
+    }
+    24.999% {
+        -webkit-transform: translate3d(150px, 10px, 200px) rotateX(60deg) rotateY(0deg) rotateZ(0deg);
+    }
+    25% {
+        -webkit-transform: translate3d(0px, 200px, 100px) rotateX(130deg) rotateY(0deg) rotateZ(360deg);
+    }
+    49.999% {
+        -webkit-transform: translate3d(0px, -0px, 100px) rotateX(40deg) rotateY(0deg) rotateZ(0deg);
+    }
+    50% {
+        -webkit-transform: translate3d(0px, -1000px, -10000px) rotateX(80deg) rotateY(0deg) rotateZ(0deg);
+    }
+    74.999% {
+        -webkit-transform: translate3d(0px, 0px, 0px) rotateX(90deg) rotateY(0deg) rotateZ(0deg);
+    }
+    75% {
+        -webkit-transform: translate3d(-100px, 0px, 0px) rotateX(1330deg) rotateY(0deg) rotateZ(1000deg);
+    }
+    100% {
+        -webkit-transform: translate3d(0px, 10px, 200px) rotateX(0deg) rotateY(780deg) rotateZ(0deg);
+    }
+} #view {
+  -webkit-animation: camerawork 15s linear 0s infinite;
+}
+
+/* 腕降る */
+@-webkit-keyframes swing {
+    0% {
+        -webkit-transform: translate3d(0px, 0px, 0px) rotateX(30deg);
+    }
+    100% {
+        -webkit-transform: translate3d(0px, 0px, 0px) rotateX(120deg);
+    }
+} #miku_arm {
+  -webkit-transform-origin: 0 0 0;
+  -webkit-animation: swing 0.5s linear 0s infinite alternate;
+}
+
+#miku {
+  -webkit-transform: translate3d(-10.5, 107.8px, -16.7px);
+  position: absolute;
+}
+

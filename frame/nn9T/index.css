@@ -1,0 +1,14 @@
+body { background-color: #eeeeee; font: 100% sans-serif; }
+ul,li{margin:0px;padding:0px;}
+#parent li{
+    float:left;
+    list-style-type:none;
+}
+#parent li a{
+    display:block;
+    margin-left:5px;
+    padding:10px;
+    color:#ffffff;
+    background-color:#333333;
+    text-decoration:none;
+}
