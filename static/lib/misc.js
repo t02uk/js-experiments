@@ -1,74 +1,121 @@
-(function() {
+/**
+ * jsdo.it でキャンバス系の作品を投稿していたときに、作成していたライブラリです。
 
+ 使用した作品例
+ http://jsdo.it/crispy
+
+ つながらない場合が多いので、以下を参照(説明の頭に、[Canvas]とついているものに使用しています)
+ https://t02uk.github.io/js-experiments/
+
+ 特徴
+ ・キャンバス操作の中でも、個人的に受け付けなかった部分を書きやすくしています。
+ ・また通常Canvasは2Dしか描画できませんが、3Dを描画できるようにしています。
+ ・個人の趣味で使うライブラリでしたので、安全/安心に書くことよりも、シンプルかつ気軽にかけることを心がけています。
+ 　・そのため、一部NumberやArrayのprototypeを汚染しています。
+ 　・Arrayに対して2次元座標、3次元座標、ベクトル、行列、など様々な役割をもたせ、それ用のメソッドを生やしています。
+ 　　SRPに違反しており、同じ描画ライブラリのTHREE.jsなどでは上記をすべて別クラスで定義していますが、気軽さを重視してこうなっています。
+ ・2012年ごろの古いライブラリというのもあり。prototype.jsが必要です。
+
+ */
+// prototype.js 1.7.3が必要
+(function () {
 
   Object.extend(Array.prototype, {
-    chain: function(f) {
+    chain: function (f) {
       var ret = _V(this[0]);
-      if(f(ret)) return ret;
+      if (f(ret)) return ret;
 
-      for(var i = 1, l = this.length; i < l; i++) {
+      for (var i = 1, l = this.length; i < l; i++) {
         ret = _V(this[i], ret);
-        if(f(ret)) return ret;
+        if (f(ret)) return ret;
       }
       return ret;
     },
-
-    andThen: function() {
-      return this.chain(function(e) {return e === null;});
+    /**
+     * 関数が入った配列をnull以外が入っている場合に限り、
+     * 合成しつづける
+     */
+    andThen: function () {
+      return this.chain(function (e) {
+        return e === null;
+      });
     },
-
-    orThen: function() {
-      return this.chain(function(e) {return e !== null;});
+    /**
+     * 関数が入った配列をnullが帰るまで、
+     * 合成しつづける
+     */
+    orThen: function () {
+      return this.chain(function (e) {
+        return e !== null;
+      });
     }
   });
 
   Object.extend(Number.prototype, {
-    toRadian: function() {
+    toRadian: function () {
       return 2.0 * Math.PI * this;
     },
-    rand: function() {
+    rand: function () {
       return ~~this.randf();
     },
-    randf: function() {
+    /**
+     * 0以上 this未満の乱数を生成する
+     */
+    randf: function () {
       return this * Math.random();
     },
-    sign: function() {
-      return this > 0 ?  1 :
-             this < 0 ? -1 : 0;
+    sign: function () {
+      return this > 0 ? 1 :
+        this < 0 ? -1 : 0;
     },
-    arize: function(n) {
-      if(n === 0) return [];
-      else if(n === 1) return [this];
+    /**
+     * 長さがnの配列を作成し、値をthisで埋める
+     */
+    arize: function (n) {
+      if (n === 0) return [];
+      else if (n === 1) return [this];
       else return new Array(n).fill(this);
     }
 
   });
 
   Object.extend(ObjectRange.prototype, {
-    rand: function() {
-    return ~~(this.start + (this.end - this.start + 1).randf());
+    rand: function () {
+      return ~~(this.start + (this.end - this.start + 1).randf());
     },
-    randf: function() {
+    randf: function () {
       return this.start + (this.end - this.start).randf();
     }
   });
 
-  window._V = function(a, b) {
-    if(a instanceof Function) return (a(_V(b)));
+  /**
+   * 引数aを値として評価する
+   */
+  window._V = function (a, b) {
+    if (a instanceof Function) return (a(_V(b)));
     else return a;
   };
 
   window.Geo = {
-    polygon: function(n, i) {
+    /**
+     * 半径iのn角形のポリゴン座標を作成する
+     */
+    polygon: function (n, i) {
       i = i || 1;
-      return $R(0, n).map(function(e) { return [0, 1].rotate(e.toRadian() * i / n);});
+      return $R(0, n).map(function (e) {
+        return [0, 1].rotate(e.toRadian() * i / n);
+      });
     },
-    rect: function(centerize) {
-      if(centerize) return [
+    /**
+     * 長さ1の四角形の座標を作成する
+     * @param centerize trueの場合、座標をセンターにずらす
+     */
+    rect: function (centerize) {
+      if (centerize) return [
         [-0.5, -0.5],
-        [ 0.5, -0.5],
-        [ 0.5,  0.5],
-        [-0.5,  0.5]
+        [0.5, -0.5],
+        [0.5, 0.5],
+        [-0.5, 0.5]
       ];
       else return [
         [0, 0],
@@ -77,14 +124,18 @@
         [0, 1]
       ];
     },
-    plane: function(centerize) {
-      if(centerize) return[
+    /**
+     * 長さ1の四角形の座標を作成する(3D用)
+     * @param centerize trueの場合、座標をセンターにずらす
+     */
+    plane: function (centerize) {
+      if (centerize) return [
         [-0.5, -0.5, 0],
-        [ 0.5, -0.5, 0],
-        [ 0.5,  0.5, 0],
-        [-0.5,  0.5, 0]
+        [0.5, -0.5, 0],
+        [0.5, 0.5, 0],
+        [-0.5, 0.5, 0]
       ];
-      else return[
+      else return [
         [0, 0, 0],
         [1, 0, 0],
         [1, 1, 0],
@@ -93,78 +144,125 @@
     },
   };
 
-  // exntend Number As Vector, Matrix ...
   Object.extend(Array.prototype, {
-    fill: function(v) {
-      for(var i = 0, l = this.length; i < l; i++) this[i] = v;
+    /**
+     * 配列の値をvで埋める
+     */
+    fill: function (v) {
+      for (var i = 0, l = this.length; i < l; i++) this[i] = v;
       return this;
     },
-    randomSelect: function() {
+    /**
+     * 配列の中からランダムで一要素取り出す
+     */
+    randomSelect: function () {
       return this[this.length.rand()];
     },
-		shuffle: function() {
-			var result = this.clone();
-			for(var i = result.length - 1; i > 0; i--) {
-				var idx1 = ~~(Math.random() * i);
-				var idx2 = i;
-				if(idx1 !== idx2) {
-					var work = result[idx1];
-					result[idx1] = result[idx2];
-					result[idx2] = work;
-				}
-			}
-			return result;
-		},
-    flatMap: function(f) {
+    /**
+     * シャッフルする
+     */
+    shuffle: function () {
+      var result = this.clone();
+      for (var i = result.length - 1; i > 0; i--) {
+        var idx1 = ~~(Math.random() * i);
+        var idx2 = i;
+        if (idx1 !== idx2) {
+          var work = result[idx1];
+          result[idx1] = result[idx2];
+          result[idx2] = work;
+        }
+      }
+      return result;
+    },
+    flatMap: function (f) {
       var result = [];
-      this.each(function(e) {
-        if(e.flatMap) result = result.concat(e.flatMap(f));
+      this.each(function (e) {
+        if (e.flatMap) result = result.concat(e.flatMap(f));
         else result = result.concat(f(e));
       });
       return result;
     },
-    shallowFlatten: function() {
+    shallowFlatten: function () {
       var result = [];
-      this.each(function(e) {
-        if(e instanceof Array) result = result.concat(e);
+      this.each(function (e) {
+        if (e instanceof Array) result = result.concat(e);
         else result.push(e);
       })
       return result;
     },
-    square: function() {
-      return this.inject(0, function(i, n) {
+    /**
+     * 配列を座標とみなし、絶対値の2乗を求める
+     * @returns {*}
+     */
+    square: function () {
+      return this.inject(0, function (i, n) {
         return i + n * n;
       });
     },
-    abs: function() {
+    /**
+     * 配列を座標とみなし、絶対値を求める
+     */
+    abs: function () {
       return Math.sqrt(this.square());
     },
-    distance: function(that) {
+    /**
+     * 配列を座標とみなし、thatとの距離を求める
+     */
+    distance: function (that) {
       return this.sub(that).abs();
     },
-    normalize: function(a) {
+    /**
+     * 配列を座標とみなし、正規化(長さ1に変換)
+     */
+    normalize: function (a) {
       a = a || 1;
       var abs = this.abs();
-      if(abs === 0.0) return this;
-      else return this.map(function(e) {
+      if (abs === 0.0) return this;
+      else return this.map(function (e) {
         return e / abs * a;
       });
     },
-    add: function(that) {
-      return this.zip2(that, function(e) { return e[0] + e[1]; });
+    /**
+     * 配列を座標とみなし、thatと加算
+     */
+    add: function (that) {
+      return this.zip2(that, function (e) {
+        return e[0] + e[1];
+      });
     },
-    sub: function(that) {
-      return this.zip2(that, function(e) { return e[0] - e[1]; });
+    /**
+     * 配列を座標とみなし、thatと減算
+     */
+    sub: function (that) {
+      return this.zip2(that, function (e) {
+        return e[0] - e[1];
+      });
     },
-    mul: function(that) {
-      if(typeof that === "number") return this.map(function(e) { return that * e; });
-      else if(this.length === 4 && this.all(function(e) { return e.length === 4; })
-           && that.length === 3 && that.all(function(e) { return typeof e === "number"; })) return this.mul43(that);
-      else if(this.length === 4 && this.all(function(e) { return e.length === 4; })
-           && that.length === 4 && that.all(function(e) { return e.length === 4; })) return this.mul44(that);
+    /**
+     * 配列を数値とみなし、thatと乗算
+     */
+    mul: function (that) {
+      if (typeof that === "number") return this.map(function (e) {
+        return that * e;
+      });
+      else if (this.length === 4 && this.all(function (e) {
+          return e.length === 4;
+        })
+        && that.length === 3 && that.all(function (e) {
+          return typeof e === "number";
+        })) return this.mul43(that);
+      else if (this.length === 4 && this.all(function (e) {
+          return e.length === 4;
+        })
+        && that.length === 4 && that.all(function (e) {
+          return e.length === 4;
+        })) return this.mul44(that);
       else return null;
     },
-    mul43: function(that) {
+    /**
+     * 配列を座標とみなし、4x3の行列と乗算
+     */
+    mul43: function (that) {
       return [
         this[0][0] * that[0] + this[1][0] * that[1] + this[2][0] * that[2] + this[3][0],
         this[0][1] * that[0] + this[1][1] * that[1] + this[2][1] * that[2] + this[3][1],
@@ -172,24 +270,27 @@
         this[0][3] * that[0] + this[1][3] * that[1] + this[2][3] * that[2] + this[3][3]
       ];
     },
-    mul44: function(that) {
+    /**
+     * 4x4の行列同士を乗算する
+     */
+    mul44: function (that) {
       return [
         [
           this[0][0] * that[0][0] + this[0][1] * that[1][0] + this[0][2] * that[2][0] + this[0][3] * that[3][0],
           this[0][0] * that[0][1] + this[0][1] * that[1][1] + this[0][2] * that[2][1] + this[0][3] * that[3][1],
           this[0][0] * that[0][2] + this[0][1] * that[1][2] + this[0][2] * that[2][2] + this[0][3] * that[3][2],
           this[0][0] * that[0][3] + this[0][1] * that[1][3] + this[0][2] * that[2][3] + this[0][3] * that[3][3]
-        ],[
+        ], [
           this[1][0] * that[0][0] + this[1][1] * that[1][0] + this[1][2] * that[2][0] + this[1][3] * that[3][0],
           this[1][0] * that[0][1] + this[1][1] * that[1][1] + this[1][2] * that[2][1] + this[1][3] * that[3][1],
           this[1][0] * that[0][2] + this[1][1] * that[1][2] + this[1][2] * that[2][2] + this[1][3] * that[3][2],
           this[1][0] * that[0][3] + this[1][1] * that[1][3] + this[1][2] * that[2][3] + this[1][3] * that[3][3]
-        ],[
+        ], [
           this[2][0] * that[0][0] + this[2][1] * that[1][0] + this[2][2] * that[2][0] + this[2][3] * that[3][0],
           this[2][0] * that[0][1] + this[2][1] * that[1][1] + this[2][2] * that[2][1] + this[2][3] * that[3][1],
           this[2][0] * that[0][2] + this[2][1] * that[1][2] + this[2][2] * that[2][2] + this[2][3] * that[3][2],
           this[2][0] * that[0][3] + this[2][1] * that[1][3] + this[2][2] * that[2][3] + this[2][3] * that[3][3]
-        ],[
+        ], [
           this[3][0] * that[0][0] + this[3][1] * that[1][0] + this[3][2] * that[2][0] + this[3][3] * that[3][0],
           this[3][0] * that[0][1] + this[3][1] * that[1][1] + this[3][2] * that[2][1] + this[3][3] * that[3][1],
           this[3][0] * that[0][2] + this[3][1] * that[1][2] + this[3][2] * that[2][2] + this[3][3] * that[3][2],
@@ -197,154 +298,210 @@
         ]
       ];
     },
-    sum: function() {
-      return this.inject(0, function(i, e) { return i + e; });
+    /**
+     * 配列の中身を数値とみなし、合計値を求める
+     */
+    sum: function () {
+      return this.inject(0, function (i, e) {
+        return i + e;
+      });
     },
-    average: function() {
-      if(this.length === 0) return 0;
+    /**
+     * 配列の中身を数値とみなし、平均値を求める
+     */
+    average: function () {
+      if (this.length === 0) return 0;
       else return this.sum() / this.length;
     },
-    negative: function() {
+    /**
+     * 配列の中身を数値とみなし、合計値を求める
+     */
+    negative: function () {
       return this.mul(-1);
     },
-    dot: function(that) {
-      return this.zip2(that).inject(0, function(i, e) { return i + e[0] * e[1]; });
+    /**
+     * 配列の中身をベクトルとみなし、thatとの内積を求める
+     */
+    dot: function (that) {
+      return this.zip2(that).inject(0, function (i, e) {
+        return i + e[0] * e[1];
+      });
     },
-    cross: function(that) {
-      if(this.length === 2 && that.length === 2) return this[0] * that[1] - this[1] * that[0];
-      else if(this.length === 3 && that.length === 3) return [
+    /**
+     * 配列の中身をベクトルとみなし、thatとの外戚を求める
+     */
+    cross: function (that) {
+      if (this.length === 2 && that.length === 2) return this[0] * that[1] - this[1] * that[0];
+      else if (this.length === 3 && that.length === 3) return [
         this[1] * that[2] - this[2] * that[1],
         this[2] * that[0] - this[0] * that[2],
         this[0] * that[1] - this[1] * that[0]
       ];
       else return null;
     },
-    invert: function() {
-      if(this.length === 2) {
+    /**
+     * 配列を2x2の行列とみなし、逆行列を求める
+     */
+    invert: function () {
+      if (this.length === 2) {
         var det = this[0][0] * this[1][1] - this[0][1] * this[1][0];
-        if(det === 0) return null;
+        if (det === 0) return null;
         var reciprocal = 1 / det;
 
         return [
           [this[1][1] * reciprocal,
-          -this[0][1] * reciprocal],
+            -this[0][1] * reciprocal],
           [-this[1][0] * reciprocal,
-           this[0][0] * reciprocal]
+            this[0][0] * reciprocal]
         ];
       } else {
         return null;
       }
     },
-    translate: function(a) {
-      if(!(a instanceof Array)) a = Array.prototype.slice.call(arguments);
+    /**
+     * 配列を座標、または座標の集合とみなし、aだけ平行移動する
+     */
+    translate: function (a) {
+      if (!(a instanceof Array)) a = Array.prototype.slice.call(arguments);
 
-      if(this[0] instanceof Array) return this.map(function(x) {
-        return x.zip2(a, function(e) {
+      if (this[0] instanceof Array) return this.map(function (x) {
+        return x.zip2(a, function (e) {
           return e[0] + e[1];
         });
       });
-      else return this.zip2(a, function(e) {
+      else return this.zip2(a, function (e) {
         return e[0] + e[1];
       });
     },
-    rotate: function(radian) {
-      if(this.length === 0) return this;
-      else if(this[0] instanceof Array) return this.map(function(e) {return e.rotate(radian);});
-      else if(this.length === 2)
+    /**
+     * 配列を2次元座標、または2次元座標の集合とみなし、radianだけ回転する
+     */
+    rotate: function (radian) {
+      if (this.length === 0) return this;
+      else if (this[0] instanceof Array) return this.map(function (e) {
+        return e.rotate(radian);
+      });
+      else if (this.length === 2)
         return [this[0] * Math.cos(radian) - this[1] * Math.sin(radian),
-                this[0] * Math.sin(radian) + this[1] * Math.cos(radian)];
-      else if(this.length === 3) return this;
+          this[0] * Math.sin(radian) + this[1] * Math.cos(radian)];
+      else if (this.length === 3) return this;
     },
-    rotatea: function(radian, axis) {
-      if(this.length === 3) {
+    /**
+     * 配列を3次元座標、または3次元座標の集合とみなし、axisを軸としてradianだけ回転する
+     */
+    rotatea: function (radian, axis) {
+      if (this.length === 3) {
         var a = axis.normalize();
-        var  x = this[0],  y = this[1],  z = this[2];
+        var x = this[0], y = this[1], z = this[2];
         var ax = axis[0], ay = axis[1], az = axis[2];
         var sin = Math.sin(radian);
         var cos = Math.cos(radian);
         var rcs = 1 - cos;
 
         return [
-            (ax * ax * rcs + cos) * x
+          (ax * ax * rcs + cos) * x
           + (ax * ay * rcs - az * sin) * y
           + (az * ax * rcs + ay * sin) * z,
 
-            (ax * ay * rcs + az * sin) * x
+          (ax * ay * rcs + az * sin) * x
           + (ay * ay * rcs + cos) * y
           + (ay * az * rcs - ax * sin) * z,
 
-            (az * ax * rcs - ay * sin) * x
+          (az * ax * rcs - ay * sin) * x
           + (ay * az * rcs + ax * sin) * y
           + (az * az * rcs + cos) * z
         ];
       }
       else return this;
     },
-    rotatex: function(radian) {
-      if(this.length === 3) return [
+    /**
+     * 配列を3次元座標、または3次元座標の集合とみなし、x座標周りにradianだけ回転する
+     */
+    rotatex: function (radian) {
+      if (this.length === 3) return [
         this[0],
         this[1] * Math.cos(radian) - this[2] * Math.sin(radian),
         this[1] * Math.sin(radian) + this[2] * Math.cos(radian)
       ];
       else return this;
     },
-    rotatey: function(radian) {
-      if(this.length === 3) return [
+    /**
+     * 配列を3次元座標、または3次元座標の集合とみなし、y座標周りにradianだけ回転する
+     */
+    rotatey: function (radian) {
+      if (this.length === 3) return [
         this[0] * Math.cos(radian) - this[2] * Math.sin(radian),
         this[1],
         this[0] * Math.sin(radian) + this[2] * Math.cos(radian)
       ];
       else return this;
     },
-    rotatez: function(radian) {
-      if(this.length === 3) return [
+    /**
+     * 配列を3次元座標、または3次元座標の集合とみなし、z座標周りにradianだけ回転する
+     */
+    rotatez: function (radian) {
+      if (this.length === 3) return [
         this[0] * Math.cos(radian) - this[1] * Math.sin(radian),
         this[0] * Math.sin(radian) + this[1] * Math.cos(radian),
         this[2]
       ];
       else return this;
     },
-    scale: function(a) {
-      if(!(a instanceof Array)) a = Array.prototype.slice.call(arguments);
-      if(this[0] instanceof Array) return this.map(function(x) {
-        return x.zip2(a, function(e) {
+    /**
+     * 配列を3次元座標、または3次元座標の集合とみなし、y座標周りにradianだけ回転する
+     */
+    scale: function (a) {
+      if (!(a instanceof Array)) a = Array.prototype.slice.call(arguments);
+      if (this[0] instanceof Array) return this.map(function (x) {
+        return x.zip2(a, function (e) {
           return e[0] * e[1];
         });
       });
-      else return this.zip2(a, function(e) {
+      else return this.zip2(a, function (e) {
         return e[0] * e[1];
       });
     },
-    zip2: function(that, callback) {
+    /**
+     * prototype.jsのzipが遅いため、作成。動きは一般的なzipと同じ。
+     */
+    zip2: function (that, callback) {
       that = that || [];
       callback = callback || Prototype.K;
       var result = new Array(Math.min(this.length, that.length));
-      for(var i = 0, l = result.length; i < l; i++) {
+      for (var i = 0, l = result.length; i < l; i++) {
         result[i] = (callback([this[i], that[i]]));
       }
       return result;
     },
-    zipWithIndex: function(callback) {
-      callback = callback || function(){return $A(arguments);};
+    zipWithIndex: function (callback) {
+      callback = callback || function () {
+        return $A(arguments);
+      };
       var i = 0;
-      return this.map(function(e) {
+      return this.map(function (e) {
         return callback(e, i++);
       });
     },
-    transpose: function() {
+    /**
+     * 配列を行列とみなし、転置行列を返す
+     */
+    transpose: function () {
       var len1 = this.length;
       var len2 = this[0].length;
       var result = new Array(len2);
-      for(var i = 0; i < len2; i++) {
+      for (var i = 0; i < len2; i++) {
         result[i] = new Array(len1);
-        for(var j = 0; j < len1; j++) {
+        for (var j = 0; j < len1; j++) {
           result[i][j] = this[j][i];
         }
       }
       return result;
     },
-    rgb: function() {
-      switch(this.length) {
+    /**
+     * r, g, b, aの色情報が入った配列とみなし、Canvas用の文字列を作成
+     */
+    rgb: function () {
+      switch (this.length) {
         case 3:
           var r = this[0];
           var g = this[1];
@@ -358,7 +515,10 @@
           return "rgba(" + [~~r, ~~g, ~~b, a].join(", ") + ")";
       }
     },
-    hsv: function() {
+    /**
+     * hsv色空間の情報が入った配列を、rgb表現に変換して返す
+     */
+    hsv: function () {
       var h = this[0];
       var s = this[1];
       var v = this[2];
@@ -371,14 +531,27 @@
       var t = v * (1 - (1 - f) * s);
 
       var result = null;
-      switch(hi) {
-        case 0: result = [v * 0xff, t * 0xff, p * 0xff].rgb(); break;
-        case 1: result = [q * 0xff, v * 0xff, p * 0xff].rgb(); break;
-        case 2: result = [p * 0xff, v * 0xff, t * 0xff].rgb(); break;
-        case 3: result = [p * 0xff, q * 0xff, v * 0xff].rgb(); break;
-        case 4: result = [t * 0xff, p * 0xff, v * 0xff].rgb(); break;
-        case 5: result = [v * 0xff, p * 0xff, q * 0xff].rgb(); break;
-        default: break;
+      switch (hi) {
+        case 0:
+          result = [v * 0xff, t * 0xff, p * 0xff].rgb();
+          break;
+        case 1:
+          result = [q * 0xff, v * 0xff, p * 0xff].rgb();
+          break;
+        case 2:
+          result = [p * 0xff, v * 0xff, t * 0xff].rgb();
+          break;
+        case 3:
+          result = [p * 0xff, q * 0xff, v * 0xff].rgb();
+          break;
+        case 4:
+          result = [t * 0xff, p * 0xff, v * 0xff].rgb();
+          break;
+        case 5:
+          result = [v * 0xff, p * 0xff, q * 0xff].rgb();
+          break;
+        default:
+          break;
       }
       return result;
     }
@@ -386,28 +559,32 @@
 
 
   // Counter
-  var Counter = function(max) {
+  var Counter = function (max) {
     var count = 0;
-    return function() {
-      if(count > max) return null;
+    return function () {
+      if (count > max) return null;
       else return count++;
     };
   };
   window.Counter = Counter;
 
-  var ImageDataWrapper = function(img) {
+  /**
+   * CanvasのgetImageDataのラッパー
+   * getImageDataの戻り値をくるみ、x, y座標で色情報を取得、設定できるようにする
+   */
+  var ImageDataWrapper = function (img) {
     this.img = img;
     this.width = img.width;
     this.height = img.height;
   };
   ImageDataWrapper.prototype = {
-    toByte: function(p) {
-      if(p.length === 1) return p;
+    toByte: function (p) {
+      if (p.length === 1) return p;
       else return (~~(p[0] * this.width + p[1] * this.height * this.width)) * 4;
     },
-    at: function(p, c) {
+    at: function (p, c) {
       p = this.toByte(p);
-      if(c) {
+      if (c) {
         this.img.data[p + 0] = c[0];
         this.img.data[p + 1] = c[1];
         this.img.data[p + 2] = c[2];
@@ -424,15 +601,16 @@
     }
   };
 
-  DCore = function() {
-
-    //return this.init(c, asSubtexture);
+  /**
+   * Canvas用のライブラリ
+   */
+  DCore = function () {
     return DCore.prototype.init.apply(this, $A(arguments))
   };
   DCore.prototype = {
     // world space
     worldSize: 1.0,
-    near:  0.0,
+    near: 0.0,
     far: 1.5,
     left: -0.5,
     right: 0.5,
@@ -449,9 +627,12 @@
     // (deprecated) draw option
     softclip: true,
 
-    // initialize the class
-    // c: canvas dom element
-    init: function(c, asSubtexture) {
+    /**
+     *
+     * @param c canvasのDOM要素
+     * @param asSubtexture 画面に表示するCanvasに紐付けない場合は, trueを設定
+     */
+    init: function (c, asSubtexture) {
 
       var self = this;
 
@@ -461,17 +642,17 @@
       self.ctxCtr = CanvasRenderingContext2D;
       self.ctx.textBaseline = "top";
 
-      if(!asSubtexture) {
-        window.addEventListener("resize", function() {
+      if (!asSubtexture) {
+        window.addEventListener("resize", function () {
           self.width = self.canvas.width = window.innerWidth;
           self.height = self.canvas.height = window.innerHeight;
           self.ctx.textBaseline = "top";
           return arguments.callee;
-       }(), false);
-     } else {
-       self.width = self.canvas.width;
-       self.height = self.canvas.height;
-     }
+        }(), false);
+      } else {
+        self.width = self.canvas.width;
+        self.height = self.canvas.height;
+      }
 
       // 3d
       this.pos = [0, 0, 1];
@@ -480,7 +661,7 @@
 
       this.viewMatrix = new Array(4).fill(new Array(4).fill(0));
 
-      this.projMatrix = (function() {
+      this.projMatrix = (function () {
         var y = 1.0 / Math.tan(self.viewAngle / 2.0);
         var x = y;
         var z = self.far / (self.far - self.near);
@@ -499,31 +680,36 @@
 
       return this;
     },
-    tap: function(func) {
+    tap: function (func) {
       func.call(this, this);
       return this;
     },
-    // generate pseudo texture
-    subTexture: function(width, height) {
+    /**
+     * 画面に存在するCanvasに、紐付かないインスタンスを生成する
+     */
+    subTexture: function (width, height) {
       var c = document.createElement("canvas");
       c.width = ~~(width) || 256;
       c.height = ~~(height) || c.width;
 
       return new DCore(c, true);
     },
-    // return whether given parameter is instance of texture
-    isSubTexture: function(src) {
+    isSubTexture: function (src) {
       return src instanceof DCore && src.asSubtexture;
     },
-    // return whether given coordinate is in bound of screen or not
-    isInBoundScr: function(p) {
+    /**
+     * 与えられた座標が、スクリーン内に収まるか判定する
+     */
+    isInBoundScr: function (p) {
       p = this.toWorld2d(p);
       return this.left2d <= p[0] && p[0] <= this.right2d
-          && this.top2d  <= p[1] && p[1] <= this.bottom2d;
+        && this.top2d <= p[1] && p[1] <= this.bottom2d;
     },
-    // set drawing color r,g,b
-    rgb: function(r, g, b) {
-      if(r instanceof Array) {
+    /**
+     * 描画に使う色をRGBで指定
+     */
+    rgb: function (r, g, b) {
+      if (r instanceof Array) {
         return DCore.prototype.rgb.apply(this, r);
       } else {
         this.ctx.fillStyle = [r, g, b].rgb();
@@ -531,9 +717,11 @@
         return this;
       }
     },
-    // set drawing color h,s,v
-    hsv: function(h, s, v) {
-      if(h instanceof Array) {
+    /**
+     * 描画に使う色をHSVで指定
+     */
+    hsv: function (h, s, v) {
+      if (h instanceof Array) {
         return DCore.prototype.hsv.apply(this, h);
       } else {
         this.ctx.fillStyle = [h, s, v].hsv();
@@ -541,9 +729,11 @@
         return this;
       }
     },
-    // set drawing color h,s,l
-    hsl: function(h, s, l) {
-      if(h instanceof Array) {
+    /**
+     * 描画に使う色をHSLで指定
+     */
+    hsl: function (h, s, l) {
+      if (h instanceof Array) {
         return DCore.prototype.hsl.apply(this, h);
       } else {
         h = (~~(h * 360)) % 360;
@@ -557,11 +747,17 @@
     // p0: start of color stop
     // p1: start of color stop
     // css: color infos array
-    gradient: function(p0, p1, css) {
+    /**
+     * グラデーションを描画する
+     * @param p0 開始位置
+     * @param p1 終了位置
+     * @param css 色情報を配列で設定
+     */
+    gradient: function (p0, p1, css) {
       p0 = this.toScr(p0);
       p1 = this.toScr(p1);
       var grad = this.ctx.createLinearGradient(p0[0], p0[1], p1[0], p1[1]);
-      for(var i = 0; i < css.length; i++) {
+      for (var i = 0; i < css.length; i++) {
         var cs = css[i];
         var k = cs[0];
         var c = (cs[1] instanceof Array) ? cs[1].rgb() : cs[1];
@@ -570,68 +766,93 @@
       this.ctx.fillStyle = grad;
       return this;
     },
-    // set font
-    // type. ex) serif, sans-serif, cursive, fantasy, monospace
-    font: function(type, size, style) {
-      if(type instanceof Array) return DCore.prototype.font.apply(this, type);
-      if(typeof size === "number") size = this.toScr(size);
+    /**
+     * フォントを設定する
+     * @param type タイプ: ex) serif, sans-serif, cursive, fantasy, monospace
+     * @param size フォントサイズ
+     * @param style bold など
+     * @returns {*}
+     */
+    font: function (type, size, style) {
+      if (type instanceof Array) return DCore.prototype.font.apply(this, type);
+      if (typeof size === "number") size = this.toScr(size);
       this.ctx.font =
         [(style) ? style : ""
-        ,(!size) ? 16 : (size.toString().match(/[^0-9]$/)) ? size : size + "pt"
-        ,(type || "Serif")].join(" ");
+          , (!size) ? 16 : (size.toString().match(/[^0-9]$/)) ? size : size + "pt"
+          , (type || "Serif")].join(" ");
       return this;
     },
-    textAlign: function(align) {
+    textAlign: function (align) {
       this.ctx.textAlign = align;
       return this;
     },
-    textBaseline: function(align) {
+    textBaseline: function (align) {
       this.ctx.textBaseline = align;
       return this;
     },
-    // set alpha value for drawing effect
-    alpha: function(alpha) { this.ctx.globalAlpha = alpha; return this; },
-    // set globalCompositeOperation parameter
-    blend: function(blend) { this.ctx.globalCompositeOperation = blend; return this; },
-    // fill background
-    fillBack: function() {
+    /**
+     * Alpha値の設定
+     */
+    alpha: function (alpha) {
+      this.ctx.globalAlpha = alpha;
+      return this;
+    },
+    /**
+     * ブレンドモードの設定
+     */
+    blend: function (blend) {
+      this.ctx.globalCompositeOperation = blend;
+      return this;
+    },
+    /**
+     * 背景を塗りつぶす
+     */
+    fillBack: function () {
       this.ctx.fillRect(0, 0, this.width, this.height);
       return this;
     },
-    // convert world coordinate to screen coordinate
-    toScr: function(p) {
-      if(!p.length) {
+    /**
+     * ワールド座標から、スクリーン座標への変換
+     */
+    toScr: function (p) {
+      if (!p.length) {
         return p * this.width * 0.5;
       }
       // screen -> device
-      else if(p.length === 2) return [
+      else if (p.length === 2) return [
         (p[0] + this.left2d) * this.width,
         (p[1] + this.top2d) * this.height
       ];
       // world -> screen
-      else if(p.length === 3) return this.toScr(this.toWorld2d(p).slice(0, 2));
+      else if (p.length === 3) return this.toScr(this.toWorld2d(p).slice(0, 2));
     },
-    scr2World2d: function(p) {
+    /**
+     * スクリーン座標からワールド座標(2D)への変換
+     */
+    scr2World2d: function (p) {
       // scala value will accepted but not recomended
-      if(!p.length) return (p - this.left2d) / this.width;
+      if (!p.length) return (p - this.left2d) / this.width;
       // vector
       else return [
         (p[0] - this.left2d) / this.width,
         (p[1] - this.top2d) / this.height
       ];
     },
-    toWorld2d: function(p) {
-      if(!p.length) return p;
-      else if(p.length === 2) return p;
-      else if(p.length === 3) {
+    /**
+     * ワールド座標(3D)から、ワールド座標(2D)への変換
+     */
+    toWorld2d: function (p) {
+      if (!p.length) return p;
+      else if (p.length === 2) return p;
+      else if (p.length === 3) {
         var clipPos = this.convMatrix.mul43(p);
 
-        if(clipPos[3] > 0.0) {
+        if (clipPos[3] > 0.0) {
           var reciprocal = 1 / clipPos[3];
           clipPos[0] *= reciprocal;
           clipPos[1] *= reciprocal;
           clipPos[2] *= reciprocal;
-          clipPos[3]  = 1.0;
+          clipPos[3] = 1.0;
         } else {
           clipPos[2] *= -1;
         }
@@ -640,31 +861,37 @@
 
         return [
           clipPos[0] - this.left,
-        -(clipPos[1] - this.top),
+          -(clipPos[1] - this.top),
           clipPos[2]
         ];
       }
     },
-    toWorld2dParallel: function(ps, f) {
+    /**
+     * ワールド座標(3D)から、ワールド座標(2D)への変換 (複数座標用)
+     * @param ps 座標の集合
+     * @param f 3D用の場合、trueを設定
+     */
+    toWorld2dParallel: function (ps, f) {
       var result = new Array(ps.length);
       var areAllBackground = true;
-      for(var i = 0, l = ps.length; i < l; i++) {
+      for (var i = 0, l = ps.length; i < l; i++) {
         var p = this.toWorld2d(ps[i]);
-        if(p[2] < 0) areAllBackground = false;
+        if (p[2] < 0) areAllBackground = false;
         result[i] = p.slice(0, f ? 3 : 2);
       }
       if (!areAllBackground) return null;
       return result;
     },
-    // convert world coordinate to screen coordinate
-    // set camera position
-    //  p: posiiton of camera
-    //  g: gaze to
-    //  u: upto
-    gazeFrom: function(p, g, u) {
-      if(p) this.pos = p;
-      if(g) this.gazeTo = g;
-      if(u) this.upTo = u;
+    /**
+     * カメラの位置を設定
+     * @param p カメラのいち
+     * @param g カメラの視線の先
+     * @param u カメラの頭の向き
+     */
+    gazeFrom: function (p, g, u) {
+      if (p) this.pos = p;
+      if (g) this.gazeTo = g;
+      if (u) this.upTo = u;
 
       var z = this.gazeTo.sub(this.pos).normalize();
       var x = this.upTo.cross(z).normalize();
@@ -678,55 +905,73 @@
         [x[0], y[0], z[0], 0],
         [x[1], y[1], z[1], 0],
         [x[2], y[2], z[2], 0],
-        [p_x,  p_y,  p_z, 1]
+        [p_x, p_y, p_z, 1]
       ];
 
       this.updateConvMatrix();
 
       return this;
     },
-    // push matrix
-    pushMatrix: function() {
-      if(this.convMatrixStack.length > 64) throw "積みすぎ";
+    /**
+     * 座標変換用に行列をPush
+     */
+    pushMatrix: function () {
+      if (this.convMatrixStack.length > 64) throw "積みすぎ";
       this.convMatrixStack.push(this.convMatrix);
     },
-    // pop matrix
-    popMatrix: function() {
-      if(this.convMatrixStack.length <= 0) throw "積んでない";
+    /**
+     * 座標変換用に行列をPop
+     */
+    popMatrix: function () {
+      if (this.convMatrixStack.length <= 0) throw "積んでない";
       this.convMatrix = this.convMatrixStack.pop();
     },
-    mulMatrix: function(m) {
+    /**
+     * 座標変換用に行列を掛け合わせる
+     */
+    mulMatrix: function (m) {
       this.convMatrix = m.mul(this.convMatrix);
     },
-    scale: function(s) {
+    /**
+     * 変換座標に拡大行列をかける
+     */
+    scale: function (s) {
       this.mulMatrix([
-        [s[0] ,  0,   0, 0],
-        [  0, s[1],   0, 0],
-        [  0,    0,s[2], 0],
-        [  0,    0,   0, 1]
+        [s[0], 0, 0, 0],
+        [0, s[1], 0, 0],
+        [0, 0, s[2], 0],
+        [0, 0, 0, 1]
       ]);
     },
-    translate: function(t) {
+    /**
+     * 変換座標に平行移動行列をかける
+     */
+    translate: function (t) {
       this.mulMatrix([
-        [  1,    0,   0, 0],
-        [  0,    1,   0, 0],
-        [  0,    0,   1, 0],
-        [t[0],t[1],t[2], 1]
+        [1, 0, 0, 0],
+        [0, 1, 0, 0],
+        [0, 0, 1, 0],
+        [t[0], t[1], t[2], 1]
       ]);
     },
-    // mul matrix
-    mulMatrix: function(m) {
+    mulMatrix: function (m) {
       this.convMatrix = this.convMatrix.mul(m);
     },
-    // update matrix for converting 3 dimension coordinate
-    updateConvMatrix: function() {
-      if(!this.projMatrix) return;
-      if(!this.viewMatrix) return;
+    /**
+     * 変換行列の更新
+     */
+    updateConvMatrix: function () {
+      if (!this.projMatrix) return;
+      if (!this.viewMatrix) return;
 
       this.convMatrix = this.viewMatrix.mul44(this.projMatrix);
     },
-    // draw rect
-    rect: function(p, wh) {
+    /**
+     * 四角形を描画
+     * @param p 左上座標を、長さ2の配列で指定
+     * @param wh 幅と高さ、長さ2の配列で指定
+     */
+    rect: function (p, wh) {
       this.ctx.beginPath();
       p = this.toScr(p);
       wh = this.toScr(wh);
@@ -736,8 +981,12 @@
       );
       return this;
     },
-    // clear rect
-    clear: function(p, wh) {
+    /**
+     * 四角形の領域をクリア
+     * @param p 左上座標を、長さ2の配列で指定
+     * @param wh 幅と高さ、長さ2の配列で指定
+     */
+    clear: function (p, wh) {
       p = this.toScr(p || [0, 0]);
       wh = this.toScr(wh || [1, 1]);
       this.ctx.clearRect(
@@ -746,75 +995,84 @@
       );
       return this;
     },
-    // draw line
-    //  ps: position list
-    line: function(ps) {
+    /**
+     * 線を描画
+     * @param ps 座標の集合
+     */
+    line: function (ps) {
       var ctx = this.ctx;
       ctx.beginPath();
 
       ps = this.toWorld2dParallel(ps);
-      if(!ps) return this;
+      if (!ps) return this;
 
-      for(var i = 0, l = ps.length; i < l; i++) {
+      for (var i = 0, l = ps.length; i < l; i++) {
         var p = this.toScr(ps[i]);
-        if(i === 0) ctx.moveTo(p[0], p[1]);
+        if (i === 0) ctx.moveTo(p[0], p[1]);
         else ctx.lineTo(p[0], p[1]);
       }
       return this;
     },
-    // draw quads
-    // ps: position list
-    quads: function(ps, unclose) {
+    /**
+     * 線を描画 (lineに似てるが、塗りつぶしに使用)
+     * @param ps 座標の集合
+     */
+    quads: function (ps, unclose) {
       var ctx = this.ctx;
       ctx.beginPath();
 
       ps = this.toWorld2dParallel(ps);
-      if(!ps) return this;
+      if (!ps) return this;
 
-      for(var i = 0, l = ps.length; i < l; i++) {
+      for (var i = 0, l = ps.length; i < l; i++) {
         var p = this.toScr(ps[i]);
-        if(i === 0) ctx.moveTo(p[0], p[1]);
+        if (i === 0) ctx.moveTo(p[0], p[1]);
         else ctx.lineTo(p[0], p[1]);
       }
-      if(!unclose) ctx.closePath();
+      if (!unclose) ctx.closePath();
       return this;
     },
-		// draw loop
-		loop: function(ps) {
+    /**
+     * 始点と終点がつながった線を描画
+     */
+    loop: function (ps) {
       var ctx = this.ctx;
       ctx.beginPath();
 
       ps = this.toWorld2dParallel(ps);
-      if(!ps) return this;
+      if (!ps) return this;
 
-      for(var i = 0, l = ps.length; i < l; i++) {
+      for (var i = 0, l = ps.length; i < l; i++) {
         var p = this.toScr(ps[i]);
-        if(i === 0) ctx.moveTo(p[0], p[1]);
+        if (i === 0) ctx.moveTo(p[0], p[1]);
         else ctx.lineTo(p[0], p[1]);
       }
-			ctx.lineTo(ps[0][0], ps[0][1]);
+      ctx.lineTo(ps[0][0], ps[0][1]);
       return this;
-		},
-    // draw curved quads
-    //
-    curved: function(ps, unclose) {
+    },
+    /**
+     * 曲線を表示
+     */
+    curved: function (ps, unclose) {
       var ctx = this.ctx;
       ctx.beginPath();
 
-      for(var i = 0, l = ps.length; i < l; i++) {
+      for (var i = 0, l = ps.length; i < l; i++) {
         var p = this.toScr(ps[i][0]);
-        if(i === 0) ctx.moveTo(p[0], p[1]);
-        else if(!ps[i][1]) ctx.lineTo(p[0], p[1]);
+        if (i === 0) ctx.moveTo(p[0], p[1]);
+        else if (!ps[i][1]) ctx.lineTo(p[0], p[1]);
         else {
           var p2 = this.toScr(ps[++i][0]);
           ctx.quadraticCurveTo(p[0], p[1], p2[0], p2[1]);
         }
       }
-      if(!unclose) ctx.closePath();
+      if (!unclose) ctx.closePath();
       return this;
     },
-    // draw circle
-    circle: function(_p, _radius, _startAngle, _endAngle) {
+    /**
+     * 円を描画
+     */
+    circle: function (_p, _radius, _startAngle, _endAngle) {
       var p = this.toScr(_p);
       var d = this.toWorld2d(_p);
       var radius = (_p.length === 2) ? this.toScr(_radius) : this.toScr(_radius) / d[2];
@@ -824,15 +1082,22 @@
       this.ctx.arc(p[0], p[1], radius, startAngle, endAngle, false);
       return this;
     },
-    // draw luminous
-    luminous: function(_p, _r0, _r1, css) {
+    /**
+     * 光球を描画
+     * @param _p
+     * @param _r0
+     * @param _r1
+     * @param css
+     * @returns {DCore}
+     */
+    luminous: function (_p, _r0, _r1, css) {
       this.ctx.beginPath();
       var p = this.toScr(_p);
       var d = this.toWorld2d(_p);
       var backclip = this.backclip;
 
 
-      if(_p.length === 2) {
+      if (_p.length === 2) {
         var r0 = this.toScr(_r0);
         var r1 = this.toScr(_r1);
       } else {
@@ -840,11 +1105,11 @@
         var x = this.upTo.cross(z).normalize();
         var r0 = this.toScr(_p.add(x.mul(_r0))).distance(this.toScr(_p));
         var r1 = this.toScr(_p.add(x.mul(_r1))).distance(this.toScr(_p));
-        if(backclip) return this;
+        if (backclip) return this;
       }
 
       var grad = this.ctx.createRadialGradient(p[0], p[1], r0, p[0], p[1], r1);
-      for(var i = 0; i < css.length; i++) {
+      for (var i = 0; i < css.length; i++) {
         var cs = css[i];
         var k = cs[0];
         var c = (cs[1] instanceof Array) ? cs[1].rgb() : cs[1];
@@ -854,71 +1119,91 @@
       this.ctx.arc(p[0], p[1], r1, 0, Math.PI * 2, false);
       return this;
     },
-    // fill
-    fill: function(){ this.ctx.fill(); return this; },
-    // stroke
-    stroke: function(){ this.ctx.stroke(); return this; },
-    // set line width
-    lineWidth: function(w){
+    fill: function () {
+      this.ctx.fill();
+      return this;
+    },
+    stroke: function () {
+      this.ctx.stroke();
+      return this;
+    },
+    lineWidth: function (w) {
       var a = this.toScr(w);
-      if(isFinite(a)) {
+      if (isFinite(a)) {
         this.ctx.lineWidth = a;
       }
 
       return this;
     },
-    // scale
-    scale: function(s) {
-      if(!s) return this;
+    scale: function (s) {
+      if (!s) return this;
       this.ctx.scale(s[0], s[1]);
       return this;
     },
-    // rotate
-    rotate: function(rad) {
-      if(!rad) return this;
+    rotate: function (rad) {
+      if (!rad) return this;
       this.ctx.rotate(rad);
       return this;
     },
-    // translate
-    translate: function(_p) {
-      if(!_p) return this;
+    translate: function (_p) {
+      if (!_p) return this;
       var p = this.toScr(_p);
       this.ctx.translate(p[0], p[1]);
       return this;
     },
-    // reset canvas coordinate space
-    reset: function() {
+    reset: function () {
       this.ctx.setTransform(1.0, 0.0,
-                            0.0, 1.0,
-                            0.0, 0.0);
+        0.0, 1.0,
+        0.0, 0.0);
       return this;
     },
-    // clip
-    clip: function() { this.ctx.clip(); return this; },
-    // save
-    save: function() { this.ctx.save(); return this; },
-    // restore
-    restore: function() { this.ctx.restore(); return this; },
+    clip: function () {
+      this.ctx.clip();
+      return this;
+    },
+    save: function () {
+      this.ctx.save();
+      return this;
+    },
+    restore: function () {
+      this.ctx.restore();
+      return this;
+    },
     // using
-    using: function(f) { this.save(); f(this); this.restore(); return this; },
-    // translate -> scale -> rotate (experiments)
-    tsr: function(p) {
+    using: function (f) {
+      this.save();
+      f(this);
+      this.restore();
+      return this;
+    },
+    /**
+     * translate -> scale -> rotate の順番で適用する
+     */
+    tsr: function (p) {
       var d = this;
 
       d.translate(p);
-      return function(s) {
+      return function (s) {
         d.scale(s);
-        return function(rad) {
+        return function (rad) {
           return d.rotate(rad);
         };
       };
     },
-    // a wrapper of canvas.drawImage
-    drawImage: function(img, _p1, _s1, _p2, _s2) {
+    /**
+     * 画像を描画する (引数は、CanvasのdrawImageと同様)
+     * @param img
+     * @param _p1
+     * @param _s1
+     * @param _p2
+     * @param _s2
+     * @returns {DCore}
+     */
+    drawImage: function (img, _p1, _s1, _p2, _s2) {
 
       var args = [img instanceof DCore ? img.canvas : img];
 
-      switch(arguments.length) {
+      switch (arguments.length) {
         case 1:   // drawImage(image); // un
           args.push(this.toScr([0, 0]));
           args.push(this.toScr([1, 1]));
@@ -946,28 +1231,34 @@
 
       return this;
     },
-    transform: function(m11, m12, m21, m22, dx, dy) {
+    transform: function (m11, m12, m21, m22, dx, dy) {
       dx = this.toScr(dx);
       dy = this.toScr(dy);
 
       this.ctx.transform(m11, m12, m21, m22, dx, dy);
       return this;
     },
-    // ref
-    // 最速チュパカブラ研究会 - Canvasによる3Dテクスチャマッピングとパフォーマンスチューニング（仮題）
-    // http://d.hatena.ne.jp/gyuque/20090211#1234364019
-    //
-    //
-    transformTo: function(from, to, drawing) {
+    /**
+     * 変換元座標から変換先座標への座標変換を行いながら、drawing関数を実行する
+     *
+     * ref
+     * 最速チュパカブラ研究会 - Canvasによる3Dテクスチャマッピングとパフォーマンスチューニング（仮題）
+     * http://d.hatena.ne.jp/gyuque/20090211#1234364019
+     * @param from 変換元座標
+     * @param to 変換先座標
+     * @param drawing 描画処理を行う関数
+     * @returns {DCore}
+     */
+    transformTo: function (from, to, drawing) {
       // check
-      if(!from) throw "from is abnormal";
-      if(!to) throw "to is abnormal";
-      if(from.length !== to.length) throw "there is defferent between from and to length";
+      if (!from) throw "from is abnormal";
+      if (!to) throw "to is abnormal";
+      if (from.length !== to.length) throw "there is defferent between from and to length";
 
       var self = this;
       from = from.clone();
       to = self.toWorld2dParallel(to);
-			if(!to) return this;
+      if (!to) return this;
 
       var pf1 = from.shift();
       var pf2 = from.shift();
@@ -977,7 +1268,7 @@
 
 
       // a drawing methods like GL_TRIANGLE_FUN
-      from.zip2(to).inject([pf2, pt2], function(i, e) {
+      from.zip2(to).inject([pf2, pt2], function (i, e) {
         var pf2 = i[0];
         var pt2 = i[1];
 
@@ -993,7 +1284,7 @@
         var inv = [
           vf1, vf2
         ].invert();
-        if(!inv) return;
+        if (!inv) return;
 
         var a = inv[0][0] * vt1[0] + inv[0][1] * vt2[0];
         var c = inv[1][0] * vt1[0] + inv[1][1] * vt2[0];
@@ -1002,7 +1293,7 @@
         var d = inv[1][0] * vt1[1] + inv[1][1] * vt2[1];
 
         var ef = pt1.sub([pf1[0] * a + pf1[1] * c,
-                          pf1[0] * b + pf1[1] * d]);
+          pf1[0] * b + pf1[1] * d]);
         //var ef = pt1.sub(pf1);
 
         // :<
@@ -1013,10 +1304,10 @@
           .save()
           .translate(ef)
           .transform(a, b, c, d, 0, 0)
-				;
-          //.tap(drawing.curry(self, to, from))
-				drawing(self, to, from);
-				self
+        ;
+        //.tap(drawing.curry(self, to, from))
+        drawing(self, to, from);
+        self
           .restore()
           .restore()
         ;
@@ -1027,31 +1318,26 @@
 
       return this;
     },
-    // fillText
-    fillText: function(text, _p) {
+    fillText: function (text, _p) {
       var p = this.toScr(_p);
       this.ctx.fillText(text, p[0], p[1]);
       return this;
     },
-    // strokeText
-    strokeText: function(text, _p) {
+    strokeText: function (text, _p) {
       var p = this.toScr(_p);
       this.ctx.strokeText(text, p[0], p[1]);
       return this;
     },
-    // measureText
-    measureText: function(text) {
+    measureText: function (text) {
       var metrics = this.ctx.measureText(text);
       return this.scr2World2d(metrics.width);
     },
-    // getNativeImageData
-    getNativeImageData: function(p, s) {
+    getNativeImageData: function (p, s) {
       p = this.toScr(p || [0, 0]);
       s = this.toScr(s || [1, 1]);
       return this.ctx.getImageData(p[0], p[1], s[0], s[1]);
     },
-    // getImageData
-    getImageData: function(p, s) {
+    getImageData: function (p, s) {
       return new ImageDataWrapper(
         this.getNativeImageData(p, s)
       );
@@ -1063,11 +1349,11 @@
   function CSS3Helper() {
   };
   CSS3Helper.prototype = {
-		transformToByArray: function(element, wh, to) {
+    transformToByArray: function (element, wh, to) {
       var w = wh[0];
       var h = wh[1];
-      if(!w) throw "failed to get width";
-      if(!h) throw "failed to get height";
+      if (!w) throw "failed to get width";
+      if (!h) throw "failed to get height";
 
       var pf1 = [0, 0];
       var pf2 = [w, 0];
@@ -1086,7 +1372,7 @@
       var inv = [
         vf1, vf2
       ].invert();
-      if(!inv) return;
+      if (!inv) return;
 
       var a = inv[0][0] * vt1[0] + inv[0][1] * vt2[0];
       var b = inv[0][0] * vt1[1] + inv[0][1] * vt2[1];
@@ -1097,8 +1383,8 @@
       var y = inv[1][0] * vt1[2] + inv[1][1] * vt2[2];
 
       var t = pt1.sub([pf1[0] * a + pf1[1] * c,
-                       pf1[0] * b + pf1[1] * d,
-                       pf1[0] * x + pf1[1] * y]);
+        pf1[0] * b + pf1[1] * d,
+        pf1[0] * x + pf1[1] * y]);
 
       var r = [
         [a, c, 0, t[0]],
@@ -1107,11 +1393,11 @@
         [0, 0, 0, 1],
       ];
 
-			return r;
-		},
-    transformToByExp: function(element, wh, to) {
+      return r;
+    },
+    transformToByExp: function (element, wh, to) {
 
-			var r = this.transformToByArray(element, wh, to);
+      var r = this.transformToByArray(element, wh, to);
 
       return "-webkit-transform: matrix3d(" + [
         [r[0][0], r[1][0], r[2][0], r[3][0]].join(","),
