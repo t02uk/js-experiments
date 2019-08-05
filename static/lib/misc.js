@@ -1,22 +1,3 @@
-/**
- * jsdo.it でキャンバス系の作品を投稿していたときに、作成していたライブラリです。
-
- 使用した作品例
- http://jsdo.it/crispy
-
- つながらない場合が多いので、以下を参照(説明の頭に、[Canvas]とついているものに使用しています)
- https://t02uk.github.io/js-experiments/
-
- 特徴
- ・キャンバス操作の中でも、個人的に受け付けなかった部分を書きやすくしています。
- ・また通常Canvasは2Dしか描画できませんが、3Dを描画できるようにしています。
- ・個人の趣味で使うライブラリでしたので、安全/安心に書くことよりも、シンプルかつ気軽にかけることを心がけています。
- 　・そのため、一部NumberやArrayのprototypeを汚染しています。
- 　・Arrayに対して2次元座標、3次元座標、ベクトル、行列、など様々な役割をもたせ、それ用のメソッドを生やしています。
- 　　SRPに違反しており、同じ描画ライブラリのTHREE.jsなどでは上記をすべて別クラスで定義していますが、気軽さを重視してこうなっています。
- ・2012年ごろの古いライブラリというのもあり。prototype.jsが必要です。
-
- */
 // prototype.js 1.7.3が必要
 (function () {
 
@@ -927,12 +908,6 @@
       this.convMatrix = this.convMatrixStack.pop();
     },
     /**
-     * 座標変換用に行列を掛け合わせる
-     */
-    mulMatrix: function (m) {
-      this.convMatrix = m.mul(this.convMatrix);
-    },
-    /**
      * 変換座標に拡大行列をかける
      */
     scale: function (s) {
@@ -954,6 +929,9 @@
         [t[0], t[1], t[2], 1]
       ]);
     },
+    /**
+     * 座標変換用に行列を掛け合わせる
+     */
     mulMatrix: function (m) {
       this.convMatrix = this.convMatrix.mul(m);
     },
