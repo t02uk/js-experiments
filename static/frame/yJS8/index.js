@@ -1,7 +1,7 @@
 // sorry but this script may contain many poor engRish
 
 
-var timeline = 
+var timeline =
 "0000000000000000000000000000000000000000000000000000000000000000" +
 "0000000000000000000000000000000000000000000000000000000000000000" +
 "0000000000000000000000000000000000000000000000000000000000000000" +
@@ -112,14 +112,11 @@ window.onload = function() {
 
   var d = new DCore();
 
-  jQuery.noConflict();
-  var $j = jQuery;
-
   // load video
-  var media = $j("<video>")
-    .attr("src", "http://dl.dropbox.com/u/3589634/resource/movie/spectrum.mp4")
-    .attr("autoplay", true)
-    .hide()
+  var media = document.createElement("video");
+  media.setAttribute("src", "../movie/spectrum.mp4");
+  media.setAttribute("autoplay", true);
+  media.setAttribute("display", "none");
 
   // setting for video
   var vw = 256;
@@ -127,12 +124,12 @@ window.onload = function() {
   var bpm = 138;
   var ratio = vh / vw;
   var canplay = false;
-  media[0].addEventListener("canplay", function(e) {
+  media.addEventListener("canplay", function(e) {
     canplay = true;
   });
-  $j("#outer").append(media);
-  media[0].width = vw;
-  media[0].height = vh;
+  document.getElementById("outer").appendChild(media);
+  media.width = vw;
+  media.height = vh;
 
   function Cube() {
 
@@ -211,7 +208,7 @@ window.onload = function() {
         ;
 
         d.transformTo(Geo.rect(), e, function(d) {
-          d.drawImage(media[0]);
+          d.drawImage(media);
         });
       })
 
@@ -244,7 +241,7 @@ window.onload = function() {
         ;
 
         d.transformTo(Geo.rect(), e, function(d) {
-          d.drawImage(media[0]);
+          d.drawImage(media);
         });
       })
     }
@@ -272,7 +269,7 @@ window.onload = function() {
         var to = Geo.rect().scale([s / 2, s]);
 
         var rad = (i.toRadian() + c / 8) / letters.length;
-  
+
         to = to
           .translate([0.0, -0.3])
           .rotate(rad)
@@ -325,7 +322,7 @@ window.onload = function() {
       );
 
       // caluculate current measure
-      var time = media[0].currentTime - 1.723;
+      var time = media.currentTime - 1.723;
       var measureDet = ~~(bpm / 60 / 4 * time * 64);
 
       // measureDet changed
@@ -346,7 +343,7 @@ window.onload = function() {
       // draw cube
       cube.act();
       cube.draw();
-      
+
     }
 
     window.setTimeout(arguments.callee.curry(c+1), 33);
